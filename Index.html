@@ -1,0 +1,3022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>thatanime</title>
+    
+    <!-- Tailwind CSS via CDN (for development) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Updated Fonts - Replaced Bagel Fat One with Concert One -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&family=Xanh+Mono:ital@0;1&family=Concert+One&display=swap" rel="stylesheet">
+    
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#0A0A0A',
+                        surface: '#151515',
+                        surfaceLight: '#202020',
+                        primary: '#FFFFFF',
+                        secondary: '#A1A1AA',
+                        accent: '#8B5CF6', // Purple accent - more professional
+                        accentLight: '#A78BFA',
+                        accentDark: '#7C3AED',
+                        crunchyroll: '#F47521',
+                        funimation: '#5A2D81',
+                        netflix: '#E50914',
+                        hulu: '#1CE783',
+                        hidive: '#00A8FF',
+                        amazon: '#00A8E1'
+                    },
+                    fontFamily: {
+                        sans: ['DM Sans', 'sans-serif'], // Primary body text
+                        syne: ['Syne', 'sans-serif'], // Secondary headings, card titles
+                        concertOne: ['Concert One', 'sans-serif'], // For fun elements (replaces Bagel)
+                        mono: ['Xanh Mono', 'monospace'], // Rating, genre tags
+                    },
+                    borderRadius: {
+                        'xl': '12px',
+                        '2xl': '16px',
+                        '3xl': '20px',
+                    },
+                    transitionDuration: {
+                        '400': '400ms',
+                        '700': '700ms',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'slide-left': 'slideLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'slide-right': 'slideRight 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'progress-spinner': 'progressSpinner 1.5s linear infinite',
+                        'genre-slide': 'genreSlide 0.3s ease-out',
+                        'dot-transition': 'dotTransition 0.3s ease-out',
+                        'float': 'float 6s ease-in-out infinite',
+                        'bounce-in': 'bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+                        'skeleton-pulse': 'skeletonPulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite', // Skeleton animation
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        slideLeft: {
+                            '0%': { transform: 'translateX(30px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' },
+                        },
+                        slideRight: {
+                            '0%': { transform: 'translateX(-30px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px #8B5CF6, 0 0 10px #8B5CF6, 0 0 15px #8B5CF6' },
+                            '100%': { boxShadow: '0 0 10px #8B5CF6, 0 0 20px #8B5CF6, 0 0 30px #8B5CF6' },
+                        },
+                        progressSpinner: {
+                            '0%': { 
+                                'stroke-dasharray': '1, 150',
+                                'stroke-dashoffset': '0',
+                                'transform': 'rotate(0deg)'
+                            },
+                            '50%': { 
+                                'stroke-dasharray': '90, 150',
+                                'stroke-dashoffset': '-35',
+                            },
+                            '100%': { 
+                                'stroke-dasharray': '90, 150',
+                                'stroke-dashoffset': '-124',
+                                'transform': 'rotate(360deg)'
+                            }
+                        },
+                        genreSlide: {
+                            '0%': { 
+                                'transform': 'scaleX(0.8)',
+                                'opacity': '0.7'
+                            },
+                            '100%': { 
+                                'transform': 'scaleX(1)',
+                                'opacity': '1'
+                            }
+                        },
+                        dotTransition: {
+                            '0%': { 
+                                'transform': 'scale(0.8)',
+                                'opacity': '0.5'
+                            },
+                            '100%': { 
+                                'transform': 'scale(1)',
+                                'opacity': '1'
+                            }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        bounceIn: {
+                            '0%': { 
+                                'transform': 'scale(0.3)',
+                                'opacity': '0'
+                            },
+                            '50%': { 
+                                'transform': 'scale(1.05)',
+                            },
+                            '70%': { 
+                                'transform': 'scale(0.9)',
+                            },
+                            '100%': { 
+                                'transform': 'scale(1)',
+                                'opacity': '1'
+                            },
+                        },
+                        skeletonPulse: { // Skeleton animation
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.5' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Reset & Utilities */
+        * {
+            -webkit-tap-highlight-color: transparent; /* Remove blue highlight */
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        body {
+            background-color: #0A0A0A;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Hide scrollbar for Chrome/Safari/Opera */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Skeleton Base Styles */
+        .skeleton {
+            background-color: #202020; /* surfaceLight */
+            animation: skeletonPulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .skeleton-text {
+            height: 0.875rem; /* 14px */
+            border-radius: 6px;
+        }
+        .skeleton-title {
+            height: 1.5rem; /* 24px */
+            border-radius: 8px;
+            width: 60%;
+        }
+        .skeleton-card-img {
+            height: 220px;
+            border-radius: 16px;
+        }
+        .skeleton-card-title {
+            height: 1rem;
+            width: 80%;
+            border-radius: 6px;
+            margin-top: 8px;
+        }
+        .skeleton-list-img {
+            width: 64px;
+            height: 80px;
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+        .skeleton-list-text-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .skeleton-list-text-1 {
+            height: 1rem;
+            width: 70%;
+        }
+        .skeleton-list-text-2 {
+            height: 0.75rem;
+            width: 40%;
+        }
+        .skeleton-list-tag {
+            height: 1.5rem;
+            width: 50px;
+            border-radius: 8px;
+        }
+
+
+        .glass-panel {
+            background: rgba(21, 21, 21, 0.7);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .glass-light {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px) saturate(180%);
+            -webkit-backdrop-filter: blur(8px) saturate(180%);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(to top, #0A0A0A 5%, rgba(10,10,10,0.8) 25%, rgba(10,10,10,0) 100%);
+        }
+
+        .text-shadow {
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        /* Smooth smooth scrolling for horizontal lists */
+        .snap-x-mandatory {
+            scroll-snap-type: x mandatory;
+        }
+        .snap-center {
+            scroll-snap-align: center;
+        }
+        .snap-start {
+            scroll-snap-align: start;
+        }
+
+        /* New Material Design 3 Progress Spinner */
+        .progress-spinner {
+            width: 48px;
+            height: 48px;
+            animation: progressSpinner 1.5s linear infinite;
+        }
+
+        .progress-spinner-circle {
+            stroke: #8B5CF6;
+            stroke-linecap: round;
+            animation: progressSpinner 1.5s ease-in-out infinite;
+        }
+
+        /* Image Fade Transition */
+        .img-fade {
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Card hover effects - Refined */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02); /* Added scale */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Genre button active state with sliding animation */
+        .genre-container {
+            position: relative;
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 16px;
+        }
+
+        .genre-slider {
+            position: absolute;
+            bottom: 16px;
+            height: 40px;
+            background-color: #8B5CF6;
+            border-radius: 12px;
+            z-index: 1;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: genreSlide 0.3s ease-out;
+        }
+
+        .genre-btn {
+            position: relative;
+            z-index: 2;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            background: transparent;
+            color: #A1A1AA;
+        }
+
+        .genre-btn.active {
+            color: white;
+        }
+
+        /* Scroll animation classes */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .scroll-animate.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-animate-left {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .scroll-animate-left.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-animate-right {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease;
+        }
+        
+        .scroll-animate-right.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Streaming service colors */
+        .streaming-crunchyroll {
+            background-color: #F47521;
+            color: white;
+        }
+        
+        .streaming-funimation {
+            background-color: #5A2D81;
+            color: white;
+        }
+        
+        .streaming-netflix {
+            background-color: #E50914;
+            color: white;
+        }
+        
+        .streaming-hulu {
+            background-color: #1CE783;
+            color: black;
+        }
+        
+        .streaming-hidive {
+            background-color: #00A8FF;
+            color: white;
+        }
+        
+        .streaming-amazon {
+            background-color: #00A8E1;
+            color: white;
+        }
+        
+        .streaming-default {
+            background-color: #202020;
+            color: white;
+        }
+
+        /* Synopsis read more */
+        .synopsis-truncated {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .synopsis-expanded {
+            display: block;
+        }
+        
+        /* Read more button icon transition */
+        .read-more-icon {
+            transition: transform 0.3s ease;
+        }
+
+        /* Dynamic tag styles */
+        .tag {
+            background-color: rgba(139, 92, 246, 0.1);
+            color: #A78BFA;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .tag:hover {
+            transform: scale(1.05);
+            background-color: rgba(139, 92, 246, 0.2);
+        }
+
+        /* Schedule day buttons */
+        .schedule-day-btn.active {
+            background-color: #8B5CF6;
+            color: white;
+        }
+
+        /* Review stars */
+        .review-star {
+            color: #8B5CF6;
+        }
+
+        /* Carousel dots - Improved transition */
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            flex-shrink: 0; /* Prevent dots from shrinking */
+        }
+        
+        .carousel-dot.active {
+            width: 24px;
+            border-radius: 12px;
+            background-color: white;
+        }
+
+        /* New Carousel Navigation Styles */
+        .carousel-nav-pill {
+            background: rgba(21, 21, 21, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .carousel-nav-arrow {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(139, 92, 246, 0.1);
+            color: #8B5CF6;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .carousel-nav-arrow:hover {
+            background: rgba(139, 92, 246, 0.2);
+            transform: scale(1.05);
+        }
+
+        .carousel-nav-arrow:active {
+            transform: scale(0.95);
+        }
+
+        /* Circular progress indicator for anime info */
+        .circular-progress {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: 
+                radial-gradient(closest-side, #151515 79%, transparent 80% 100%),
+                conic-gradient(#8B5CF6 0% 75%, #2D2D2D 0% 100%);
+            position: relative;
+        }
+
+        .circular-progress::before {
+            content: attr(data-progress);
+            position: absolute;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Streaming button with logos */
+        .streaming-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .streaming-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .streaming-btn:active {
+            transform: translateY(0);
+        }
+
+        .streaming-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Improved anime info section */
+        .anime-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .anime-info-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 16px 12px;
+            border-radius: 12px;
+            background: rgba(32, 32, 32, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .anime-info-item:hover {
+            background: rgba(32, 32, 32, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .anime-info-label {
+            font-size: 0.75rem;
+            color: #A1A1AA;
+            margin-bottom: 8px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .anime-info-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Improved search results */
+        .search-result {
+            padding: 20px;
+            margin-bottom: 12px;
+            border-radius: 16px;
+            background: rgba(21, 21, 21, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            height: auto;
+            min-height: 160px;
+        }
+
+        .search-result:hover {
+            background: rgba(32, 32, 32, 0.8);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 640px) {
+            .carousel-nav-pill {
+                padding: 4px 8px;
+            }
+            
+            .carousel-nav-arrow {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .genre-btn {
+                padding: 10px 16px;
+                font-size: 0.75rem;
+            }
+            
+            .search-result {
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .anime-info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .carousel-nav-pill {
+                transform: scale(0.9);
+            }
+        }
+
+        /* Improved image quality */
+        .high-quality-image {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+
+        /* Better readability */
+        .readable-text {
+            line-height: 1.6;
+            letter-spacing: 0.01em;
+        }
+
+        /* Enhanced animations */
+        .enhanced-animation {
+            animation-duration: 0.5s;
+            animation-fill-mode: both;
+        }
+
+        /* Video section styles - Added outline */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background: #000;
+            /* Added outline and transition */
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .video-container:hover {
+            /* Add hover effect for the outline */
+            border-color: rgba(139, 92, 246, 0.7);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.2);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-section-empty {
+            text-align: center;
+            padding: 12px;
+            color: #A1A1AA;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .video-card {
+            scroll-snap-align: start;
+            flex-shrink: 0;
+            width: 90%;
+            max-width: 480px;
+            margin-right: 16px;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            .video-card {
+                width: 45%;
+                max-width: 500px;
+            }
+        }
+
+        .video-carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 16px;
+            padding: 16px 0;
+            scrollbar-width: none;
+        }
+
+        .video-carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .video-section {
+            margin-bottom: 48px;
+        }
+
+        /* Search fade animations */
+        .search-fade-enter {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .search-fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .search-fade-exit {
+            opacity: 1;
+        }
+
+        .search-fade-exit-active {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased pb-24 selection:bg-accent selection:text-white">
+
+    <!-- Navbar (Top) - Improved with better spacing -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 p-4">
+        <div class="glass-panel rounded-2xl p-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <span class="material-icons-round text-2xl text-accent">theaters</span>
+                <div class="h-6 w-px bg-gray-600"></div>
+                <!-- Replaced font-bagel with font-concertOne -->
+                <h1 class="font-concertOne font-bold text-2xl tracking-tight text-white">thatanime</h1>
+            </div>
+            <button onclick="toggleSearch()" class="w-10 h-10 rounded-xl glass-light flex items-center justify-center active:scale-95 transition">
+                <span class="material-icons-round text-white">search</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main id="app" class="min-h-screen">
+        
+        <!-- Hero Section -->
+        <div id="hero-carousel" class="relative h-[85vh] w-full overflow-hidden bg-surface mt-16">
+            <!-- Skeleton Loader for Hero -->
+            <div class="absolute inset-0 skeleton"></div>
+        </div>
+
+        <!-- Random Spotlight Section -->
+        <section class="mb-10 px-6 scroll-animate">
+            <div class="flex justify-between items-end mb-4">
+                <h2 class="font-syne font-bold text-2xl">Random Spotlight</h2>
+                <button onclick="fetchRandomAnime()" class="px-4 py-2 rounded-xl glass-light text-white font-medium text-sm flex items-center gap-1 active:scale-95 transition">
+                    Refresh
+                    <span class="material-icons-round text-sm">refresh</span>
+                </button>
+            </div>
+            <div id="random-spotlight" class="glass-panel rounded-2xl overflow-hidden">
+                <!-- Skeleton Loader for Spotlight -->
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/3 h-64 md:h-auto skeleton"></div>
+                    <div class="p-6 md:w-2/3">
+                        <div class="skeleton skeleton-title mb-4"></div>
+                        <div class="flex gap-2 mb-4">
+                            <div class="skeleton skeleton-list-tag"></div>
+                            <div class="skeleton skeleton-list-tag"></div>
+                        </div>
+                        <div class="skeleton skeleton-text mb-2"></div>
+                        <div class="skeleton skeleton-text mb-4 w-4/5"></div>
+                        <div class="skeleton h-12 w-36 rounded-xl"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories / Filter Pills with Sliding Animation -->
+        <div class="px-4 mb-6 scroll-animate">
+            <h2 class="font-syne font-bold text-2xl mb-4 px-2">Browse</h2>
+            <div class="genre-container relative no-scrollbar" id="genre-list">
+                <div id="genre-slider" class="genre-slider"></div>
+                <!-- Genre buttons injected by JS -->
+                <button onclick="fetchAllAnime()" class="genre-btn active">All</button>
+                <button onclick="fetchByGenre(1, this)" class="genre-btn">Action</button>
+                <button onclick="fetchByGenre(2, this)" class="genre-btn">Adventure</button>
+                <button onclick="fetchByGenre(4, this)" class="genre-btn">Comedy</button>
+                <button onclick="fetchByGenre(10, this)" class="genre-btn">Fantasy</button>
+                <button onclick="fetchByGenre(22, this)" class="genre-btn">Romance</button>
+                <button onclick="fetchByGenre(24, this)" class="genre-btn">Sci-Fi</button>
+                <button onclick="fetchByGenre(8, this)" class="genre-btn">Drama</button>
+                <button onclick="fetchByGenre(14, this)" class="genre-btn">Horror</button>
+            </div>
+        </div>
+
+        <!-- Trending Section with Improved Navigation -->
+        <section class="mb-10 scroll-animate">
+            <div class="flex justify-between items-end px-6 mb-4">
+                <h2 class="font-syne font-bold text-2xl">Trending Now</h2>
+                <div class="carousel-nav-pill">
+                    <button class="carousel-nav-arrow" onclick="scrollCarousel('trending-list', -1)">
+                        <span class="material-icons-round text-sm">chevron_left</span>
+                    </button>
+                    <div id="trending-dots" class="flex gap-1 mx-2">
+                        <!-- Dots injected by JS -->
+                    </div>
+                    <button class="carousel-nav-arrow" onclick="scrollCarousel('trending-list', 1)">
+                        <span class="material-icons-round text-sm">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+            <div id="trending-list" class="flex gap-4 overflow-x-auto px-6 pb-8 snap-x-mandatory no-scrollbar">
+                <!-- Skeleton Cards injected by JS -->
+            </div>
+        </section>
+
+        <!-- This Season's Must-Watch Section -->
+        <section class="mb-10 scroll-animate">
+            <div class="flex justify-between items-end px-6 mb-4">
+                <h2 class="font-syne font-bold text-2xl">This Season's Must-Watch</h2>
+                <div class="carousel-nav-pill">
+                    <button class="carousel-nav-arrow" onclick="scrollCarousel('seasonal-list', -1)">
+                        <span class="material-icons-round text-sm">chevron_left</span>
+                    </button>
+                    <div id="seasonal-dots" class="flex gap-1 mx-2">
+                        <!-- Dots injected by JS -->
+                    </div>
+                    <button class="carousel-nav-arrow" onclick="scrollCarousel('seasonal-list', 1)">
+                        <span class="material-icons-round text-sm">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+            <div id="seasonal-list" class="flex gap-4 overflow-x-auto px-6 pb-8 snap-x-mandatory no-scrollbar">
+                <!-- Skeleton Cards injected by JS -->
+            </div>
+        </section>
+
+        <!-- Hidden Gems Section (Genre-Blend) -->
+        <section class="mb-10 scroll-animate">
+            <div class="flex justify-between items-end px-6 mb-4">
+                <h2 class="font-syne font-bold text-2xl">Hidden Gems</h2>
+                <div class="carousel-nav-pill">
+                    <button class="carousel-nav-arrow" onclick="scrollCarousel('hidden-gems-list', -1)">
+                        <span class="material-icons-round text-sm">chevron_left</span>
+                    </button>
+                    <div id="hidden-gems-dots" class="flex gap-1 mx-2">
+                        <!-- Dots injected by JS -->
+                    </div>
+                    <button class="carousel-nav-arrow" onclick="scrollCarousel('hidden-gems-list', 1)">
+                        <span class="material-icons-round text-sm">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+            <div id="hidden-gems-list" class="flex gap-4 overflow-x-auto px-6 pb-8 snap-x-mandatory no-scrollbar">
+                <!-- Skeleton Cards injected by JS -->
+            </div>
+        </section>
+
+        <!-- Upcoming Section -->
+        <section class="mb-10 scroll-animate">
+             <div class="flex justify-between items-end px-6 mb-4">
+                <h2 class="font-syne font-bold text-2xl">Upcoming Hype</h2>
+            </div>
+            <div id="upcoming-list" class="flex flex-col gap-4 px-6">
+                 <!-- Skeleton List Items injected by JS -->
+            </div>
+        </section>
+
+        <!-- Weekly Schedule Section -->
+        <section class="mb-10 scroll-animate">
+            <div class="flex justify-between items-end px-6 mb-4">
+                <h2 class="font-syne font-bold text-2xl">Weekly Schedule</h2>
+                <div class="flex gap-2 overflow-x-auto pb-2 max-w-[70vw] no-scrollbar">
+                    <button onclick="changeScheduleDay('monday')" class="px-3 py-1 rounded-xl glass-light text-secondary text-xs font-bold active:scale-95 transition schedule-day-btn">Mon</button>
+                    <button onclick="changeScheduleDay('tuesday')" class="px-3 py-1 rounded-xl glass-light text-secondary text-xs font-bold active:scale-95 transition schedule-day-btn">Tue</button>
+                    <button onclick="changeScheduleDay('wednesday')" class="px-3 py-1 rounded-xl glass-light text-secondary text-xs font-bold active:scale-95 transition schedule-day-btn">Wed</button>
+                    <button onclick="changeScheduleDay('thursday')" class="px-3 py-1 rounded-xl glass-light text-secondary text-xs font-bold active:scale-95 transition schedule-day-btn">Thu</button>
+                    <button onclick="changeScheduleDay('friday')" class="px-3 py-1 rounded-xl glass-light text-secondary text-xs font-bold active:scale-95 transition schedule-day-btn">Fri</button>
+                    <button onclick="changeScheduleDay('saturday')" class="px-3 py-1 rounded-xl glass-light text-secondary text-xs font-bold active:scale-95 transition schedule-day-btn">Sat</button>
+                    <button onclick="changeScheduleDay('sunday')" class="px-3 py-1 rounded-xl glass-light text-secondary text-xs font-bold active:scale-95 transition schedule-day-btn">Sun</button>
+                </div>
+            </div>
+            <div id="schedule-list" class="flex flex-col gap-4 px-6">
+                <!-- Skeleton List Items injected by JS -->
+            </div>
+        </section>
+
+        <!-- Recommendations Section -->
+        <section class="mb-10 scroll-animate">
+            <div class="flex justify-between items-end px-6 mb-4">
+                <h2 class="font-syne font-bold text-2xl">Recommended For You</h2>
+                <div class="carousel-nav-pill">
+                    <button class="carousel-nav-arrow" onclick="scrollCarousel('recommendations-list', -1)">
+                        <span class="material-icons-round text-sm">chevron_left</span>
+                    </button>
+                    <div id="recommendations-dots" class="flex gap-1 mx-2">
+                        <!-- Dots injected by JS -->
+                    </div>
+                    <button class="carousel-nav-arrow" onclick="scrollCarousel('recommendations-list', 1)">
+                        <span class="material-icons-round text-sm">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+            <div id="recommendations-list" class="flex gap-4 overflow-x-auto px-6 pb-8 snap-x-mandatory no-scrollbar">
+                <!-- Skeleton Cards injected by JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Search Overlay - Enhanced with tags and better design -->
+    <div id="search-overlay" class="fixed inset-0 bg-black/95 z-[60] hidden opacity-0 transition-opacity duration-300">
+        <div class="p-6 pt-20">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-syne font-bold">Search</h2>
+                <button onclick="toggleSearch()" class="p-2 rounded-xl glass-light text-white">
+                    <span class="material-icons-round">close</span>
+                </button>
+            </div>
+            <div class="relative mb-6">
+                <input type="text" id="search-input" placeholder="Search anime..." class="w-full glass-panel text-white p-4 pl-12 rounded-2xl text-lg outline-none focus:ring-2 focus:ring-accent transition-all" autocomplete="off">
+                <span class="material-icons-round text-white/70 absolute left-4 top-1/2 transform -translate-y-1/2">search</span>
+            </div>
+            
+            <!-- Popular Search Tags -->
+            <div id="popular-genres" class="mb-6 transition-all duration-300">
+                <h3 class="text-lg font-syne font-bold text-white mb-4">Popular Genres</h3>
+                <div class="flex flex-wrap gap-3">
+                    <!-- Replaced font-bagel with font-concertOne -->
+                    <button onclick="searchByTag('Action')" class="tag font-concertOne hover:scale-105 transition-transform">Action</button>
+                    <button onclick="searchByTag('Adventure')" class="tag font-concertOne hover:scale-105 transition-transform">Adventure</button>
+                    <button onclick="searchByTag('Comedy')" class="tag font-concertOne hover:scale-105 transition-transform">Comedy</button>
+                    <button onclick="searchByTag('Drama')" class="tag font-concertOne hover:scale-105 transition-transform">Drama</button>
+                    <button onclick="searchByTag('Fantasy')" class="tag font-concertOne hover:scale-105 transition-transform">Fantasy</button>
+                    <button onclick="searchByTag('Romance')" class="tag font-concertOne hover:scale-105 transition-transform">Romance</button>
+                    <button onclick="searchByTag('Sci-Fi')" class="tag font-concertOne hover:scale-105 transition-transform">Sci-Fi</button>
+                    <button onclick="searchByTag('Slice of Life')" class="tag font-concertOne hover:scale-105 transition-transform">Slice of Life</button>
+                </div>
+            </div>
+            
+            <div id="search-results" class="overflow-y-auto max-h-[60vh] pb-20">
+                <!-- Results or Skeletons injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Modal (Full Screen) - Improved with larger banner -->
+    <div id="details-modal" class="fixed inset-0 bg-background z-[70] translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] overflow-y-auto">
+        
+        <!-- Close Button (Fixed) -->
+        <button onclick="closeDetails()" class="fixed top-6 right-6 z-50 w-12 h-12 rounded-xl glass-panel flex items-center justify-center active:scale-90 transition">
+            <span class="material-icons-round text-white">close</span>
+        </button>
+
+        <!-- Dynamic Content Container -->
+        <div id="details-content" class="relative min-h-screen pb-20">
+            <!-- Skeleton or Content injected via JS -->
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40">
+        <div class="glass-panel px-6 py-3 rounded-2xl flex items-center gap-8">
+            <button onclick="scrollToTop()" class="flex flex-col items-center gap-1 text-white group">
+                <span class="material-icons-round group-active:scale-90 transition">home</span>
+                <span class="text-[10px] font-medium opacity-0 group-hover:opacity-100 absolute -top-4 transition-opacity">Home</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-secondary group">
+                <span class="material-icons-round group-active:scale-90 transition">bookmarks</span>
+            </button>
+            <button onclick="toggleSearch()" class="flex flex-col items-center gap-1 text-secondary group">
+                <span class="material-icons-round group-active:scale-90 transition">explore</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- STATE ---
+        const state = {
+            topAnime: [],
+            upcomingAnime: [],
+            seasonalAnime: [],
+            hiddenGems: [],
+            recommendations: [],
+            randomSpotlight: null,
+            currentScheduleDay: getCurrentDay(),
+            currentHeroIndex: 0,
+            searchQuery: '',
+            heroInterval: null,
+            allScheduleData: null,
+            scheduleDays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+            currentReviewIndex: 0,
+            carouselPositions: {
+                'trending-list': 0,
+                'seasonal-list': 0,
+                'hidden-gems-list': 0,
+                'recommendations-list': 0
+            },
+            reviewsPage: 1,
+            isLoadingReviews: false,
+            allReviews: [],
+            currentAnimeId: null
+        };
+
+        // Helper function to get current day
+        function getCurrentDay() {
+            const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            return days[new Date().getDay()];
+        }
+
+        const DOM = {
+            hero: document.getElementById('hero-carousel'),
+            heroDots: document.getElementById('hero-dots'),
+            trending: document.getElementById('trending-list'),
+            trendingDots: document.getElementById('trending-dots'),
+            upcoming: document.getElementById('upcoming-list'),
+            seasonal: document.getElementById('seasonal-list'),
+            seasonalDots: document.getElementById('seasonal-dots'),
+            hiddenGems: document.getElementById('hidden-gems-list'),
+            hiddenGemsDots: document.getElementById('hidden-gems-dots'),
+            recommendations: document.getElementById('recommendations-list'),
+            recommendationsDots: document.getElementById('recommendations-dots'),
+            randomSpotlight: document.getElementById('random-spotlight'),
+            schedule: document.getElementById('schedule-list'),
+            detailsModal: document.getElementById('details-modal'),
+            detailsContent: document.getElementById('details-content'),
+            searchOverlay: document.getElementById('search-overlay'),
+            searchInput: document.getElementById('search-input'),
+            searchResults: document.getElementById('search-results'),
+            genreList: document.getElementById('genre-list'),
+            genreSlider: document.getElementById('genre-slider'),
+            popularGenres: document.getElementById('popular-genres')
+        };
+        
+        // --- SKELETON RENDERERS ---
+
+        function createSkeletonCard() {
+            return `
+            <div class="snap-center shrink-0 w-[150px] flex flex-col gap-2">
+                <div class="skeleton skeleton-card-img"></div>
+                <div class="skeleton skeleton-card-title"></div>
+            </div>
+            `;
+        }
+
+        function createSkeletonListItem() {
+            return `
+            <div class="flex gap-4 items-center glass-panel p-3 rounded-xl">
+                <div class="skeleton skeleton-list-img"></div>
+                <div class="skeleton-list-text-wrapper">
+                    <div class="skeleton skeleton-text skeleton-list-text-1"></div>
+                    <div class="skeleton skeleton-text skeleton-list-text-2"></div>
+                    <div class="flex gap-2 mt-1">
+                        <div class="skeleton skeleton-list-tag"></div>
+                        <div class="skeleton skeleton-list-tag"></div>
+                    </div>
+                </div>
+            </div>
+            `;
+        }
+        
+        function createSkeletonSearchResult() {
+            return `
+            <div class="search-result">
+                <div class="flex gap-4">
+                    <div class="skeleton skeleton-list-img w-20 h-28"></div>
+                    <div class="flex flex-col gap-2 overflow-hidden flex-1">
+                        <div class="skeleton skeleton-text h-6 w-3/4"></div>
+                        <div class="skeleton skeleton-text h-4 w-1/2"></div>
+                        <div class="flex flex-wrap gap-2 mt-1">
+                            <div class="skeleton skeleton-list-tag"></div>
+                            <div class="skeleton skeleton-list-tag"></div>
+                        </div>
+                        <div class="skeleton skeleton-text h-4 w-full mt-2"></div>
+                        <div class="skeleton skeleton-text h-4 w-5/6"></div>
+                    </div>
+                </div>
+            </div>
+            `;
+        }
+        
+        function renderDetailsSkeleton() {
+            return `
+                <!-- Skeleton Hero Media -->
+                <div class="relative h-[70vh] w-full bg-surface skeleton"></div>
+
+                <!-- Skeleton Content Body -->
+                <div class="px-6 py-8">
+                    
+                    <!-- Skeleton Synopsis -->
+                    <div class="mb-10">
+                        <div class="skeleton skeleton-title mb-4 w-1/4"></div>
+                        <div class="skeleton skeleton-text mb-2"></div>
+                        <div class="skeleton skeleton-text mb-2"></div>
+                        <div class="skeleton skeleton-text mb-2 w-4/5"></div>
+                    </div>
+                    
+                    <!-- Skeleton Layout Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        
+                        <!-- Left Column Skeleton -->
+                        <div class="lg:col-span-2 flex flex-col gap-10">
+                            <!-- Skeleton Where to Watch -->
+                            <div>
+                                <div class="skeleton skeleton-title mb-4 w-1/3"></div>
+                                <div class="flex flex-wrap gap-3">
+                                    <div class="skeleton h-12 w-36 rounded-xl"></div>
+                                    <div class="skeleton h-12 w-36 rounded-xl"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Skeleton Videos -->
+                            <div>
+                                <div class="skeleton skeleton-title mb-6 w-1/3"></div>
+                                <div class="skeleton w-full h-56 rounded-xl"></div>
+                            </div>
+                            
+                            <!-- Skeleton Reviews -->
+                            <div>
+                                <div class="skeleton skeleton-title mb-4 w-1/4"></div>
+                                <div class="skeleton w-full h-40 rounded-xl"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right Column Skeleton -->
+                        <div class="lg:col-span-1 flex flex-col gap-10">
+                            <!-- Skeleton Details -->
+                            <div>
+                                <div class="skeleton skeleton-title mb-6 w-1/3"></div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="skeleton h-24 rounded-xl"></div>
+                                    <div class="skeleton h-24 rounded-xl"></div>
+                                    <div class="skeleton h-24 rounded-xl"></div>
+                                    <div class="skeleton h-24 rounded-xl"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Skeleton Voice Cast -->
+                            <div>
+                                <div class="skeleton skeleton-title mb-6 w-1/2"></div>
+                                <div class="flex gap-4 overflow-x-auto">
+                                    <div class="skeleton h-24 w-20 rounded-full"></div>
+                                    <div class="skeleton h-24 w-20 rounded-full"></div>
+                                    <div class="skeleton h-24 w-20 rounded-full"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Skeleton Tags -->
+                            <div>
+                                <div class="skeleton skeleton-title mb-6 w-1/2"></div>
+                                <div class="flex flex-wrap gap-3">
+                                    <div class="skeleton skeleton-list-tag"></div>
+                                    <div class="skeleton skeleton-list-tag"></div>
+                                    <div class="skeleton skeleton-list-tag"></div>
+                                    <div class="skeleton skeleton-list-tag"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Initialize genre slider position
+        function initGenreSlider() {
+            if (!DOM.genreSlider) return;
+            
+            const activeButton = DOM.genreList.querySelector('.genre-btn.active');
+            if (activeButton) {
+                const rect = activeButton.getBoundingClientRect();
+                const containerRect = DOM.genreList.getBoundingClientRect();
+                
+                DOM.genreSlider.style.width = `${rect.width}px`;
+                DOM.genreSlider.style.left = `${rect.left - containerRect.left}px`;
+            }
+        }
+
+        // Update genre slider position
+        function updateGenreSlider(button) {
+            if (!DOM.genreSlider) return;
+            
+            const rect = button.getBoundingClientRect();
+            const containerRect = DOM.genreList.getBoundingClientRect();
+            
+            DOM.genreSlider.style.width = `${rect.width}px`;
+            DOM.genreSlider.style.left = `${rect.left - containerRect.left}px`;
+            
+            // Update active class
+            DOM.genreList.querySelectorAll('.genre-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            button.classList.add('active');
+        }
+
+        // --- API ---
+        const JIKAN_BASE = 'https://api.jikan.moe/v4';
+
+        // Streaming service mapping with logos
+        const streamingServices = {
+            'Crunchyroll': { 
+                color: 'crunchyroll', 
+                icon: `<svg class="streaming-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M2.933 13.467a10.55 10.55 0 1 1 21.067-.8V12c0 6.627-5.373 12-12 12S0 18.627 0 12s5.373-12 12-12h.8a10.617 10.617 0 0 0-9.867 13.467z"/>
+                </svg>`
+            },
+            'Funimation': { 
+                color: 'funimation', 
+                icon: `<svg class="streaming-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>`
+            },
+            'Netflix': { 
+                color: 'netflix', 
+                icon: `<svg class="streaming-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M5.398 0v.006c3.028 8.556 5.37 15.175 8.348 23.596 2.344.058 4.85.398 4.854.398-2.8-7.924-5.923-16.747-8.487-24zm8.489 0v9.63L18.6 22.951c-.043-7.86-.004-15.913.002-22.95zM5.398 1.05V24c1.873-.225 2.81-.312 4.715-.398v-9.22z"/>
+                </svg>`
+            },
+            'Hulu': { 
+                color: 'hulu', 
+                icon: `<svg class="streaming-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M14.4 6.9c-1.2 0-2.1.9-2.1 2.1s.9 2.1 2.1 2.1 2.1-.9 2.1-2.1-.9-2.1-2.1-2.1zM0 6.9v10.2h4.8V6.9H0zm7.2 0v10.2h4.8V6.9H7.2zm7.2 0v10.2h4.8V6.9h-4.8z"/>
+                </svg>`
+            },
+            'HIDIVE': { 
+                color: 'hidive', 
+                icon: `<span class="material-icons-round text-base">play_circle</span>`
+            },
+            'Amazon Prime Video': { 
+                color: 'amazon', 
+                icon: `<svg class="streaming-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm0 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10z"/>
+                    <path d="M12 5l2.4 5.4 5.6.8-4 3.9.9 5.6L12 17.8 7.1 20l.9-5.6-4-3.9 5.6-.8z"/>
+                </svg>`
+            }
+        };
+
+        // Simple cache implementation without localStorage to avoid quota errors
+        const memoryCache = new Map();
+        const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+        // Rate limiting with exponential backoff
+        let lastRequestTime = 0;
+        const BASE_DELAY = 1000; // Increased base delay to 1 second
+        let retryCount = 0;
+        const MAX_RETRIES = 3;
+
+        async function fetchJikan(endpoint) {
+            // Rate limiting
+            const now = Date.now();
+            const timeSinceLastRequest = now - lastRequestTime;
+            if (timeSinceLastRequest < BASE_DELAY) {
+                await new Promise(r => setTimeout(r, BASE_DELAY - timeSinceLastRequest));
+            }
+            
+            // Check memory cache first
+            const cacheKey = endpoint;
+            const cached = memoryCache.get(cacheKey);
+            if (cached && (Date.now() - cached.timestamp) < CACHE_TTL) {
+                console.log('Cache hit:', endpoint);
+                return cached.data;
+            }
+            
+            lastRequestTime = Date.now();
+            
+            try {
+                const res = await fetch(`${JIKAN_BASE}${endpoint}`);
+                
+                if (!res.ok) {
+                    if (res.status === 429) {
+                        // Rate limited - implement exponential backoff
+                        retryCount++;
+                        if (retryCount <= MAX_RETRIES) {
+                            const backoffDelay = BASE_DELAY * Math.pow(2, retryCount);
+                            console.warn(`Rate limited, retrying in ${backoffDelay}ms (attempt ${retryCount}/${MAX_RETRIES})`);
+                            await new Promise(r => setTimeout(r, backoffDelay));
+                            return fetchJikan(endpoint); // Retry
+                        } else {
+                            throw new Error(`Rate limited after ${MAX_RETRIES} retries`);
+                        }
+                    } else if (res.status === 404) {
+                        console.warn(`Resource not found: ${endpoint}`);
+                        return null; // Return null for 404 instead of throwing
+                    } else {
+                        throw new Error(`Network response was not ok: ${res.status}`);
+                    }
+                }
+                
+                // Reset retry count on successful request
+                retryCount = 0;
+                
+                const data = await res.json();
+                
+                // Cache successful responses in memory
+                memoryCache.set(cacheKey, {
+                    data: data,
+                    timestamp: Date.now()
+                });
+                
+                return data;
+            } catch (error) {
+                console.error("Fetch error for", endpoint, error);
+                // Reset retry count on error to prevent infinite loops
+                retryCount = 0;
+                return null;
+            }
+        }
+
+        // Function to fetch all seasons/related entries for an anime
+        async function fetchRelatedSeasons(animeId) {
+            try {
+                const response = await fetchJikan(`/anime/${animeId}/full`);
+                if (!response || !response.data) return null;
+                
+                const anime = response.data;
+                const related = anime.relations || [];
+                
+                // Group related entries by type
+                const groupedRelations = {};
+                
+                // Fetch images for each related entry
+                const relatedWithImages = await Promise.all(
+                    related.flatMap(relation => 
+                        relation.entry.map(async entry => {
+                            try {
+                                // Handle both anime and manga entries
+                                const isManga = entry.type === 'manga';
+                                const endpoint = isManga ? `/manga/${entry.mal_id}` : `/anime/${entry.mal_id}`;
+                                const itemData = await fetchJikan(endpoint);
+                                
+                                // Get high quality image
+                                let imageUrl = 'https://via.placeholder.com/100x140?text=No+Image';
+                                if (itemData?.data?.images) {
+                                    imageUrl = itemData.data.images.jpg?.large_image_url || 
+                                               itemData.data.images.jpg?.image_url || 
+                                               imageUrl;
+                                }
+                                
+                                return {
+                                    ...entry,
+                                    image_url: imageUrl,
+                                    relationType: relation.relation
+                                };
+                            } catch (error) {
+                                console.error(`Error fetching image for ${entry.mal_id}:`, error);
+                                return {
+                                    ...entry,
+                                    image_url: 'https://via.placeholder.com/100x140?text=No+Image',
+                                    relationType: relation.relation
+                                };
+                            }
+                        })
+                    )
+                );
+                
+                // Group by relation type
+                relatedWithImages.forEach(entry => {
+                    const relationType = entry.relationType;
+                    if (!groupedRelations[relationType]) {
+                        groupedRelations[relationType] = [];
+                    }
+                    groupedRelations[relationType].push(entry);
+                });
+                
+                return {
+                    "Main Series": {
+                        title: anime.title,
+                        mal_id: anime.mal_id,
+                        type: anime.type,
+                        image_url: anime.images?.jpg?.large_image_url || 'https://via.placeholder.com/100x140?text=No+Image'
+                    },
+                    "Related Anime": groupedRelations
+                };
+            } catch (error) {
+                console.error("Error fetching related seasons:", error);
+                return null;
+            }
+        }
+
+        // Function to fetch videos data
+        async function fetchVideos(animeId) {
+            try {
+                const response = await fetchJikan(`/anime/${animeId}/videos`);
+                if (!response || !response.data) return null;
+                
+                return response.data;
+            } catch (error) {
+                console.error("Error fetching videos:", error);
+                return null;
+            }
+        }
+
+        // Function to create video carousel
+        function createVideoCarousel(videos, type, title) {
+            if (!videos || videos.length === 0) {
+                return `
+                    <div class="video-section">
+                        <h3 class="text-xl font-syne font-bold text-white mb-6">${title}</h3>
+                        <div class="video-section-empty">
+                            <span class="material-icons-round text-4xl mb-2 opacity-50">play_circle_outline</span>
+                            <p>No ${title.toLowerCase()} available</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            const carouselId = `${type}-carousel`;
+            const dotsId = `${carouselId}-dots`;
+            
+            let videoCards = '';
+            
+            if (type === 'promo') {
+                // Promo videos - direct iframe embeds
+                videoCards = videos.map((video, index) => {
+                    const embedUrl = video.trailer.embed_url;
+                    const youtubeUrl = video.trailer.url;
+                    const youtubeButton = youtubeUrl ? `
+                        <a href="${youtubeUrl}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition text-sm active:scale-95">
+                            <span class="material-icons-round text-base">play_arrow</span>
+                            Watch on YouTube
+                        </a>
+                    ` : '';
+                    
+                    return `
+                    <div class="video-card">
+                        <div class="video-container">
+                            <iframe 
+                                src="${embedUrl}" 
+                                title="${video.title || 'Video Player'}"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="mt-4">
+                            <h4 class="font-bold text-white text-lg mb-2">${video.title || 'No title available'}</h4>
+                            ${youtubeButton}
+                        </div>
+                    </div>
+                    `;
+                }).join('');
+            } else if (type === 'music_videos') {
+                // Music videos - direct iframe embeds
+                videoCards = videos.map((video, index) => {
+                    const embedUrl = video.video.embed_url;
+                    const youtubeUrl = video.video.url;
+                    const youtubeButton = youtubeUrl ? `
+                        <a href="${youtubeUrl}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition text-sm active:scale-95">
+                            <span class="material-icons-round text-base">play_arrow</span>
+                            Watch on YouTube
+                        </a>
+                    ` : '';
+                    
+                    return `
+                    <div class="video-card">
+                        <div class="video-container">
+                            <iframe 
+                                src="${embedUrl}" 
+                                title="${video.title || 'Video Player'}"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="mt-4">
+                            <h4 class="font-bold text-white text-lg mb-2">${video.title || 'No title available'}</h4>
+                            ${video.meta ? `
+                                <p class="text-gray-300 text-sm mb-2">
+                                    Song: ${video.meta.title || 'Unknown'} • Artist: ${video.meta.author || 'Unknown'}
+                                </p>
+                            ` : ''}
+                            ${youtubeButton}
+                        </div>
+                    </div>
+                    `;
+                }).join('');
+            }
+            
+            return `
+                <div class="video-section" id="${carouselId}-section">
+                    <h3 class="text-xl font-syne font-bold text-white mb-6">${title}</h3>
+                    <div class="video-carousel" id="${carouselId}">
+                        ${videoCards}
+                    </div>
+                    ${videos.length > 1 ? `
+                    <div class="flex justify-center mt-4">
+                        <div class="carousel-nav-pill">
+                            <button class="carousel-nav-arrow" onclick="scrollVideoCarousel('${carouselId}', -1)">
+                                <span class="material-icons-round text-sm">chevron_left</span>
+                            </button>
+                            <div id="${dotsId}" class="flex gap-1 mx-2">
+                                ${videos.map((_, index) => `<div class="carousel-dot ${index === 0 ? 'active' : ''}"></div>`).join('')}
+                            </div>
+                            <button class="carousel-nav-arrow" onclick="scrollVideoCarousel('${carouselId}', 1)">
+                                <span class="material-icons-round text-sm">chevron_right</span>
+                            </button>
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        // Function to scroll video carousels
+        function scrollVideoCarousel(carouselId, direction) {
+            const carousel = document.getElementById(carouselId);
+            if (!carousel) return;
+            
+            const scrollAmount = carousel.clientWidth * 0.8;
+            carousel.scrollBy({
+                left: direction * scrollAmount,
+                behavior: 'smooth'
+            });
+            
+            // Update dots after scrolling
+            setTimeout(() => updateVideoCarouselDots(carouselId), 300);
+        }
+
+        // Function to update video carousel dots with smooth transitions
+        function updateVideoCarouselDots(carouselId) {
+            const carousel = document.getElementById(carouselId);
+            if (!carousel) return;
+            
+            const dotsId = `${carouselId}-dots`;
+            const dotsContainer = document.getElementById(dotsId);
+            if (!dotsContainer) return;
+            
+            const scrollLeft = carousel.scrollLeft;
+            const scrollWidth = carousel.scrollWidth;
+            const clientWidth = carousel.clientWidth;
+            const itemCount = carousel.children.length;
+            
+            // Calculate current position
+            const maxScroll = scrollWidth - clientWidth;
+            const position = maxScroll > 0 ? Math.round((scrollLeft / maxScroll) * (itemCount - 1)) : 0;
+            
+            // Update dots with smooth transitions
+            const dots = dotsContainer.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, index) => {
+                if (index === position) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        // Initialize scroll listeners for video carousels
+        function initVideoCarouselScrollListeners() {
+            const videoCarousels = document.querySelectorAll('.video-carousel');
+            videoCarousels.forEach(carousel => {
+                const carouselId = carousel.id;
+                const dotsId = `${carouselId}-dots`;
+                const dotsContainer = document.getElementById(dotsId);
+                if (!dotsContainer) return;
+                
+                // Add scroll event to update dots
+                carousel.addEventListener('scroll', () => {
+                    updateVideoCarouselDots(carouselId);
+                });
+                
+                // Add click handlers to dots
+                const dots = dotsContainer.querySelectorAll('.carousel-dot');
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        const itemWidth = carousel.querySelector('.video-card').offsetWidth + 16;
+                        carousel.scrollTo({
+                            left: index * itemWidth,
+                            behavior: 'smooth'
+                        });
+                    });
+                });
+            });
+        }
+
+        // Scroll animation observer
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Initialize horizontal scroll animations for carousels
+        function initHorizontalScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Animate children with staggered delay
+                        const children = entry.target.children;
+                        Array.from(children).forEach((child, index) => {
+                            setTimeout(() => {
+                                child.classList.add('animate');
+                            }, index * 100);
+                        });
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            // Observe all horizontal scrolling containers
+            document.querySelectorAll('#trending-list, #seasonal-list, #hidden-gems-list, #recommendations-list').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Carousel navigation functions
+        function scrollCarousel(carouselId, direction) {
+            const carousel = document.getElementById(carouselId);
+            if (!carousel) return;
+            
+            const scrollAmount = carousel.clientWidth * 0.8;
+            carousel.scrollBy({
+                left: direction * scrollAmount,
+                behavior: 'smooth'
+            });
+            
+            // Update dots after scrolling
+            setTimeout(() => updateCarouselDots(carouselId), 300);
+        }
+
+        function updateCarouselDots(carouselId) {
+            const carousel = document.getElementById(carouselId);
+            if (!carousel) return;
+            
+            const dotsContainer = document.getElementById(`${carouselId}-dots`);
+            if (!dotsContainer) return;
+            
+            const scrollLeft = carousel.scrollLeft;
+            const scrollWidth = carousel.scrollWidth;
+            const clientWidth = carousel.clientWidth;
+            const itemCount = carousel.children.length;
+            
+            // Calculate current position
+            const maxScroll = scrollWidth - clientWidth;
+            const position = maxScroll > 0 ? Math.round((scrollLeft / maxScroll) * (itemCount - 1)) : 0;
+            state.carouselPositions[carouselId] = position;
+            
+            // Update dots
+            updateDotsContainer(dotsContainer, itemCount, position);
+        }
+
+        // *** START: MODIFIED CODE ***
+        // Updated updateDotsContainer function with sliding window logic and smooth transitions
+        function updateDotsContainer(dotsContainer, itemCount, activeIndex) {
+            if (!dotsContainer || itemCount === 0) return;
+
+            const maxDots = 7; // Max dots to show
+            const halfWindow = Math.floor(maxDots / 2);
+            
+            // Get the current state from the container's dataset
+            let currentStartDot = parseInt(dotsContainer.dataset.startDot || '0', 10);
+            let currentEndDot = currentStartDot + maxDots;
+
+            // Check if the active index is *outside* the currently rendered window
+            // This is the "rebuild" condition
+            const isOutsideWindow = activeIndex < currentStartDot || activeIndex >= currentEndDot;
+            
+            if (dotsContainer.children.length === 0 || isOutsideWindow) {
+                // --- REBUILD PATH ---
+                // Active index is out of view, we must rebuild the dot window
+                
+                let newStartDot = 0;
+                
+                if (itemCount <= maxDots) {
+                    newStartDot = 0;
+                } else if (activeIndex <= halfWindow) {
+                    newStartDot = 0; // Near start
+                } else if (activeIndex >= itemCount - 1 - halfWindow) {
+                    newStartDot = itemCount - maxDots; // Near end
+                } else {
+                    newStartDot = activeIndex - halfWindow; // In middle
+                }
+                
+                const newEndDot = newStartDot + maxDots;
+                
+                // Store the new window state
+                dotsContainer.dataset.startDot = newStartDot;
+                dotsContainer.innerHTML = ''; // Clear dots for rebuild
+
+                const carousel = document.getElementById('reviews-carousel'); // Assumes this is for reviews
+                
+                // Helper function to create a dot
+                const createDot = (index) => {
+                    const dot = document.createElement('div');
+                    dot.className = 'carousel-dot';
+                    if (index === activeIndex) {
+                        dot.classList.add('active');
+                    }
+                    
+                    // Add click handler to scroll to the correct review
+                    dot.addEventListener('click', () => {
+                        // We must recalculate itemWidth here as it's only for reviews
+                        if (carousel) {
+                            const itemWidth = carousel.querySelector('.snap-center').offsetWidth + 16;
+                            carousel.scrollTo({
+                                left: index * itemWidth,
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                    
+                    return dot;
+                };
+
+                // Helper function for "ellipsis" dots
+                const createEllipsis = () => {
+                    const ellipsis = document.createElement('div');
+                    ellipsis.className = 'carousel-dot';
+                    ellipsis.style.width = '6px';
+                    ellipsis.style.height = '6px';
+                    ellipsis.style.opacity = '0.4';
+                    return ellipsis;
+                };
+                
+                // Add left ellipsis if needed
+                if (newStartDot > 0) {
+                    dotsContainer.appendChild(createEllipsis());
+                }
+
+                // Render the dots in the sliding window
+                for (let i = newStartDot; i < newEndDot; i++) {
+                    dotsContainer.appendChild(createDot(i));
+                }
+
+                // Add right ellipsis if needed
+                if (newEndDot < itemCount) {
+                    dotsContainer.appendChild(createEllipsis());
+                }
+                
+            } else {
+                // --- SMOOTH TRANSITION PATH ---
+                // Active index is inside the visible window, just move the class
+                
+                // Find the currently active dot
+                const oldActive = dotsContainer.querySelector('.carousel-dot.active');
+                
+                // Calculate the *child index* of the new dot.
+                // This is different from activeIndex.
+                // We need to account for a potential left ellipsis.
+                let leftEllipsisOffset = dotsContainer.children[0]?.style.width === '6px' ? 1 : 0;
+                let newActiveChildIndex = (activeIndex - currentStartDot) + leftEllipsisOffset;
+
+                const newActive = dotsContainer.children[newActiveChildIndex];
+
+                if (oldActive) oldActive.classList.remove('active');
+                if (newActive) newActive.classList.add('active');
+            }
+        }
+        // *** END: MODIFIED CODE ***
+
+        function prevHeroSlide() {
+            const nextIndex = state.currentHeroIndex === 0 ? 
+                state.topAnime.length - 1 : state.currentHeroIndex - 1;
+            changeHeroSlide(nextIndex);
+        }
+
+        function nextHeroSlide() {
+            const nextIndex = (state.currentHeroIndex + 1) % state.topAnime.length;
+            changeHeroSlide(nextIndex);
+        }
+
+        // Initialize carousel scroll listeners
+        function initCarouselScrollListeners() {
+            const carousels = ['trending-list', 'seasonal-list', 'hidden-gems-list', 'recommendations-list'];
+            
+            carousels.forEach(carouselId => {
+                const carousel = document.getElementById(carouselId);
+                if (carousel) {
+                    carousel.addEventListener('scroll', () => {
+                        updateCarouselDots(carouselId);
+                    });
+                }
+            });
+        }
+
+        // Initialize on window resize for responsiveness
+        function initResponsiveListeners() {
+            window.addEventListener('resize', () => {
+                // Reinitialize genre slider position
+                initGenreSlider();
+                
+                // Update carousel dots
+                Object.keys(state.carouselPositions).forEach(carouselId => {
+                    updateCarouselDots(carouselId);
+                });
+            });
+        }
+
+        async function init() {
+            // Initialize UI components
+            initGenreSlider();
+            initScrollAnimations();
+            initHorizontalScrollAnimations();
+            initCarouselScrollListeners();
+            initResponsiveListeners();
+            
+            // Set current day as active in schedule
+            const currentDayBtn = document.querySelector(`[onclick="changeScheduleDay('${state.currentScheduleDay}')"]`);
+            if (currentDayBtn) {
+                currentDayBtn.classList.add('active', 'text-white', 'bg-accent');
+                currentDayBtn.classList.remove('text-secondary', 'glass-light');
+            }
+            
+            // 1. Get Random Spotlight
+            fetchRandomAnime();
+
+            // 2. Get Top Anime (Hero & Trending) - Load 15 items
+            // Render skeletons first
+            renderTrending(null);
+            const topData = await fetchJikan('/top/anime?filter=airing&limit=15');
+            if (topData && topData.data) {
+                state.topAnime = topData.data;
+                renderHero(state.topAnime);
+                renderTrending(state.topAnime);
+            }
+
+            // 3. Get Seasonal Anime - Load 15 items
+            renderSeasonal(null);
+            const seasonalData = await fetchJikan('/seasons/now?limit=15');
+            if (seasonalData && seasonalData.data) {
+                state.seasonalAnime = seasonalData.data;
+                renderSeasonal(state.seasonalAnime);
+            }
+
+            // 4. Get Hidden Gems (Genre-Blend: Action, Romance, Score >= 8) - Load 15 items
+            renderHiddenGems(null);
+            const gemsData = await fetchJikan('/anime?genres=1,22&min_score=8&order_by=score&sort=desc&limit=15');
+            if (gemsData && gemsData.data) {
+                state.hiddenGems = gemsData.data;
+                renderHiddenGems(state.hiddenGems);
+            }
+
+            // 5. Get Upcoming
+            renderUpcoming(null);
+            const upcomingData = await fetchJikan('/seasons/upcoming?limit=5');
+            if (upcomingData && upcomingData.data) {
+                state.upcomingAnime = upcomingData.data;
+                renderUpcoming(state.upcomingAnime);
+            }
+
+            // 6. Get Schedule for current day
+            fetchSchedule();
+
+            // 7. Get Recommendations - Load 15 items
+            renderRecommendations(null);
+            const recData = await fetchJikan('/recommendations/anime');
+            if (recData && recData.data) {
+                // Extract anime from recommendations
+                state.recommendations = recData.data
+                    .flatMap(rec => rec.entry)
+                    .filter((anime, index, self) => 
+                        index === self.findIndex(a => a.mal_id === anime.mal_id)
+                    )
+                    .slice(0, 15);
+                renderRecommendations(state.recommendations);
+            }
+        }
+
+        // --- RENDERERS ---
+
+        function renderHero(animes) {
+            DOM.hero.innerHTML = '';
+            
+            animes.forEach((anime, index) => {
+                const slide = document.createElement('div');
+                // Reduced hero transition duration
+                slide.className = `absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`;
+                slide.id = `hero-slide-${index}`;
+
+                // High res image preference
+                const imgUrl = anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url || 'https://via.placeholder.com/800x450?text=No+Image';
+                
+                // Metadata
+                const genres = anime.genres?.map(g => g.name).slice(0, 2).join(' • ') || 'Unknown';
+                const year = anime.year || 'N/A';
+
+                slide.innerHTML = `
+                    <img src="${imgUrl}" class="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.6] high-quality-image" alt="${anime.title}" onerror="this.src='https://via.placeholder.com/800x450?text=No+Image'">
+                    <div class="absolute inset-0 hero-gradient"></div>
+                    <div class="absolute bottom-0 left-0 w-full p-6 pb-20 flex flex-col gap-4 items-start z-20">
+                        <div class="flex gap-2 text-xs font-bold tracking-widest text-accent uppercase glass-panel px-3 py-1 rounded-xl font-mono">
+                            ${anime.type || 'Unknown'}
+                        </div>
+                        <h2 class="text-4xl md:text-6xl font-syne font-black leading-none text-shadow drop-shadow-2xl line-clamp-2 text-white">
+                            ${anime.title_english || anime.title}
+                        </h2>
+                        <div class="flex items-center gap-3 text-sm text-gray-300 font-medium flex-wrap">
+                            <span class="text-green-400 font-bold">${anime.score || 'N/A'} Rating</span>
+                            <span>•</span>
+                            <span>${year}</span>
+                            <span>•</span>
+                            <span>${genres}</span>
+                        </div>
+                        <p class="text-sm text-gray-400 line-clamp-2 max-w-md font-light leading-relaxed readable-text">
+                            ${anime.synopsis || 'No synopsis available.'}
+                        </p>
+                        
+                        <div class="flex gap-3 mt-2 w-full md:w-auto">
+                            <button onclick="openDetails(${anime.mal_id})" class="flex-1 md:flex-none h-14 px-8 bg-accent text-white rounded-xl font-bold text-base flex items-center justify-center gap-2 active:scale-95 transition hover:bg-accentDark">
+                                <span class="material-icons-round text-[20px]">play_arrow</span>
+                                Details
+                            </button>
+                            <button class="h-14 w-14 rounded-xl glass-light text-white flex items-center justify-center active:scale-95 transition">
+                                <span class="material-icons-round text-[20px]">bookmark_border</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                DOM.hero.appendChild(slide);
+            });
+
+            // Update hero dots
+            updateHeroDots();
+            startHeroRotation();
+        }
+
+        function updateHeroDots() {
+            if (!DOM.heroDots) return;
+            
+            DOM.heroDots.innerHTML = '';
+            const numDots = Math.min(state.topAnime.length, 10);
+            
+            for (let i = 0; i < numDots; i++) {
+                const dot = document.createElement('div');
+                dot.className = `carousel-dot ${i === state.currentHeroIndex ? 'active' : ''}`;
+                DOM.heroDots.appendChild(dot);
+            }
+        }
+
+        function startHeroRotation() {
+            if (state.heroInterval) clearInterval(state.heroInterval);
+            state.heroInterval = setInterval(() => {
+                const nextIndex = (state.currentHeroIndex + 1) % state.topAnime.length;
+                changeHeroSlide(nextIndex);
+            }, 6000); // Change every 6 seconds
+        }
+
+        function changeHeroSlide(index) {
+            const currentSlide = document.getElementById(`hero-slide-${state.currentHeroIndex}`);
+            const nextSlide = document.getElementById(`hero-slide-${index}`);
+            
+            if (currentSlide && nextSlide) {
+                currentSlide.classList.remove('opacity-100', 'z-10');
+                currentSlide.classList.add('opacity-0', 'z-0');
+                
+                nextSlide.classList.remove('opacity-0', 'z-0');
+                nextSlide.classList.add('opacity-100', 'z-10');
+                
+                state.currentHeroIndex = index;
+                updateHeroDots();
+            }
+        }
+
+        function renderTrending(animes) {
+            // If no animes, render skeletons
+            if (!animes) {
+                DOM.trending.innerHTML = Array(6).fill(createSkeletonCard()).join('');
+                return;
+            }
+            
+            DOM.trending.innerHTML = animes.map(anime => {
+                // Use high quality image
+                const imgUrl = anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url || 'https://via.placeholder.com/150x220?text=No+Image';
+                return `
+                <div onclick="openDetails(${anime.mal_id})" class="snap-center shrink-0 w-[150px] flex flex-col gap-2 group active:scale-95 transition-transform duration-200 card-hover scroll-animate-left">
+                    <div class="relative h-[220px] rounded-2xl overflow-hidden shadow-lg">
+                        <img src="${imgUrl}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 high-quality-image" loading="lazy" onerror="this.src='https://via.placeholder.com/150x220?text=No+Image'">
+                        <div class="absolute top-2 right-2 glass-panel text-white text-[10px] font-bold px-2 py-1 rounded-xl font-mono">
+                            ★ ${anime.score || 'N/A'}
+                        </div>
+                    </div>
+                    <h3 class="font-medium text-sm truncate text-gray-100 pl-1 readable-text">${anime.title}</h3>
+                </div>
+                `;
+            }).join('');
+            
+            // Update dots
+            updateCarouselDots('trending-list');
+            
+            // Re-initialize scroll animations for new elements
+            setTimeout(initHorizontalScrollAnimations, 100);
+        }
+
+        function renderSeasonal(animes) {
+            // If no animes, render skeletons
+            if (!animes) {
+                DOM.seasonal.innerHTML = Array(6).fill(createSkeletonCard()).join('');
+                return;
+            }
+            
+            DOM.seasonal.innerHTML = animes.map(anime => {
+                // Use high quality image
+                const imgUrl = anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url || 'https://via.placeholder.com/150x220?text=No+Image';
+                return `
+                <div onclick="openDetails(${anime.mal_id})" class="snap-center shrink-0 w-[150px] flex flex-col gap-2 group active:scale-95 transition-transform duration-200 card-hover scroll-animate-right">
+                    <div class="relative h-[220px] rounded-2xl overflow-hidden shadow-lg">
+                        <img src="${imgUrl}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 high-quality-image" loading="lazy" onerror="this.src='https://via.placeholder.com/150x220?text=No+Image'">
+                        <div class="absolute top-2 right-2 glass-panel text-white text-[10px] font-bold px-2 py-1 rounded-xl font-mono">
+                            ★ ${anime.score || 'N/A'}
+                        </div>
+                    </div>
+                    <h3 class="font-medium text-sm truncate text-gray-100 pl-1 readable-text">${anime.title}</h3>
+                </div>
+                `;
+            }).join('');
+            
+            // Update dots
+            updateCarouselDots('seasonal-list');
+            
+            setTimeout(initHorizontalScrollAnimations, 100);
+        }
+
+        function renderHiddenGems(animes) {
+            // If no animes, render skeletons
+            if (!animes) {
+                DOM.hiddenGems.innerHTML = Array(6).fill(createSkeletonCard()).join('');
+                return;
+            }
+            
+            DOM.hiddenGems.innerHTML = animes.map(anime => {
+                // Use high quality image
+                const imgUrl = anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url || 'https://via.placeholder.com/150x220?text=No+Image';
+                return `
+                <div onclick="openDetails(${anime.mal_id})" class="snap-center shrink-0 w-[150px] flex flex-col gap-2 group active:scale-95 transition-transform duration-200 card-hover scroll-animate-left">
+                    <div class="relative h-[220px] rounded-2xl overflow-hidden shadow-lg">
+                        <img src="${imgUrl}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 high-quality-image" loading="lazy" onerror="this.src='https://via.placeholder.com/150x220?text=No+Image'">
+                        <div class="absolute top-2 right-2 glass-panel text-white text-[10px] font-bold px-2 py-1 rounded-xl font-mono">
+                            ★ ${anime.score || 'N/A'}
+                        </div>
+                    </div>
+                    <h3 class="font-medium text-sm truncate text-gray-100 pl-1 readable-text">${anime.title}</h3>
+                </div>
+                `;
+            }).join('');
+            
+            // Update dots
+            updateCarouselDots('hidden-gems-list');
+            
+            setTimeout(initHorizontalScrollAnimations, 100);
+        }
+
+        function renderRecommendations(animes) {
+            // If no animes, render skeletons
+            if (!animes) {
+                DOM.recommendations.innerHTML = Array(6).fill(createSkeletonCard()).join('');
+                return;
+            }
+            
+            DOM.recommendations.innerHTML = animes.map(anime => {
+                // Use high quality image
+                const imgUrl = anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url || 'https://via.placeholder.com/150x220?text=No+Image';
+                return `
+                <div onclick="openDetails(${anime.mal_id})" class="snap-center shrink-0 w-[150px] flex flex-col gap-2 group active:scale-95 transition-transform duration-200 card-hover scroll-animate-right">
+                    <div class="relative h-[220px] rounded-2xl overflow-hidden shadow-lg">
+                        <img src="${imgUrl}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 high-quality-image" loading="lazy" onerror="this.src='https://via.placeholder.com/150x220?text=No+Image'">
+                        <div class="absolute top-2 right-2 glass-panel text-white text-[10px] font-bold px-2 py-1 rounded-xl font-mono">
+                            ★ ${anime.score || 'N/A'}
+                        </div>
+                    </div>
+                    <h3 class="font-medium text-sm truncate text-gray-100 pl-1 readable-text">${anime.title}</h3>
+                </div>
+                `;
+            }).join('');
+            
+            // Update dots
+            updateCarouselDots('recommendations-list');
+            
+            setTimeout(initHorizontalScrollAnimations, 100);
+        }
+
+        function renderUpcoming(animes) {
+            // If no animes, render skeletons
+            if (!animes) {
+                DOM.upcoming.innerHTML = Array(3).fill(createSkeletonListItem()).join('');
+                return;
+            }
+            
+            DOM.upcoming.innerHTML = animes.map(anime => {
+                // Use high quality image
+                const imgUrl = anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url || 'https://via.placeholder.com/64x80?text=No+Image';
+                const studio = anime.studios?.[0]?.name || 'Unknown Studio';
+                const genres = anime.genres?.slice(0,2) || [];
+                
+                return `
+                <div onclick="openDetails(${anime.mal_id})" class="flex gap-4 items-center glass-panel p-3 rounded-xl active:bg-surfaceLight transition card-hover scroll-animate">
+                    <img src="${imgUrl}" class="w-16 h-20 object-cover rounded-xl shrink-0 shadow-md high-quality-image" onerror="this.src='https://via.placeholder.com/64x80?text=No+Image'">
+                    <div class="flex flex-col gap-1 overflow-hidden">
+                        <h3 class="font-bold text-base text-white truncate readable-text">${anime.title}</h3>
+                        <p class="text-xs text-secondary truncate">${studio}</p>
+                        <div class="flex gap-2 mt-1">
+                            <!-- Replaced font-bagel with font-concertOne -->
+                            ${genres.map(g => `<span class="tag font-concertOne">${g.name}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="ml-auto">
+                        <span class="material-icons-round text-gray-600">chevron_right</span>
+                    </div>
+                </div>
+                `;
+            }).join('');
+            
+            setTimeout(initScrollAnimations, 100);
+        }
+
+        async function fetchRandomAnime() {
+            // Render skeleton first
+            DOM.randomSpotlight.innerHTML = `
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/3 h-64 md:h-auto skeleton"></div>
+                    <div class="p-6 md:w-2/3">
+                        <div class="skeleton skeleton-title mb-4"></div>
+                        <div class="flex gap-2 mb-4">
+                            <div class="skeleton skeleton-list-tag"></div>
+                            <div class="skeleton skeleton-list-tag"></div>
+                        </div>
+                        <div class="skeleton skeleton-text mb-2"></div>
+                        <div class="skeleton skeleton-text mb-4 w-4/5"></div>
+                        <div class="skeleton h-12 w-36 rounded-xl"></div>
+                    </div>
+                </div>
+            `;
+            
+            const randomData = await fetchJikan('/random/anime');
+            if (randomData && randomData.data) {
+                state.randomSpotlight = randomData.data;
+                renderRandomSpotlight(state.randomSpotlight);
+            }
+        }
+
+        function renderRandomSpotlight(anime) {
+            // Use high quality image
+            const imgUrl = anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url || 'https://via.placeholder.com/300x400?text=No+Image';
+            
+            DOM.randomSpotlight.innerHTML = `
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/3 h-64 md:h-auto">
+                        <img src="${imgUrl}" class="w-full h-full object-cover high-quality-image" alt="${anime.title}" onerror="this.src='https://via.placeholder.com/300x400?text=No+Image'">
+                    </div>
+                    <div class="p-6 md:w-2/3">
+                        <h3 class="text-2xl font-syne font-bold mb-2">${anime.title_english || anime.title}</h3>
+                        <div class="flex gap-2 mb-4">
+                            <span class="text-xs font-bold bg-accent text-white px-2 py-1 rounded-xl font-mono">${anime.type || 'Unknown'}</span>
+                            <span class="text-xs font-bold glass-light text-white px-2 py-1 rounded-xl font-mono">★ ${anime.score || 'N/A'}</span>
+                            <!-- Replaced font-bagel with font-concertOne -->
+                            ${(anime.genres?.slice(0,2) || []).map(g => `<span class="tag font-concertOne">${g.name}</span>`).join('')}
+                        </div>
+                        <p class="text-gray-300 mb-4 line-clamp-3 readable-text">${anime.synopsis || 'No synopsis available.'}</p>
+                        <button onclick="openDetails(${anime.mal_id})" class="h-12 px-8 bg-accent text-white rounded-xl font-bold text-base flex items-center justify-center gap-2 active:scale-95 transition">
+                            <span class="material-icons-round text-[18px]">play_arrow</span>
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function fetchSchedule() {
+            // Render Skeletons
+            DOM.schedule.innerHTML = Array(3).fill(createSkeletonListItem()).join('');
+            
+            // Fetch schedule for the current day
+            const scheduleData = await fetchJikan(`/schedules?filter=${state.currentScheduleDay}`);
+            if (scheduleData && scheduleData.data) {
+                state.allScheduleData = scheduleData.data;
+                renderSchedule(state.currentScheduleDay);
+            } else {
+                DOM.schedule.innerHTML = `
+                    <div class="text-center p-6 text-gray-400">
+                        <span class="material-icons-round text-4xl mb-2">schedule</span>
+                        <p>Failed to load schedule data</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderSchedule(day) {
+            state.currentScheduleDay = day;
+            
+            // Update active day button
+            document.querySelectorAll('.schedule-day-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-white', 'bg-accent');
+                btn.classList.add('text-secondary', 'glass-light');
+            });
+            
+            const activeBtn = document.querySelector(`[onclick="changeScheduleDay('${day}')"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active', 'text-white', 'bg-accent');
+                activeBtn.classList.remove('text-secondary', 'glass-light');
+            }
+            
+            if (!state.allScheduleData || state.allScheduleData.length === 0) {
+                DOM.schedule.innerHTML = `
+                    <div class="text-center p-6 text-gray-400">
+                        <span class="material-icons-round text-4xl mb-2">schedule</span>
+                        <p>No anime scheduled for ${day.charAt(0).toUpperCase() + day.slice(1)}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            DOM.schedule.innerHTML = state.allScheduleData.slice(0, 10).map(anime => {
+                // Use high quality image
+                const imgUrl = anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url || 'https://via.placeholder.com/64x80?text=No+Image';
+                const broadcastTime = anime.broadcast?.string || 'Time not specified';
+                const genres = anime.genres?.slice(0,2) || [];
+                
+                return `
+                <div onclick="openDetails(${anime.mal_id})" class="flex gap-4 items-center glass-panel p-3 rounded-xl active:bg-surfaceLight transition card-hover scroll-animate">
+                    <img src="${imgUrl}" class="w-16 h-20 object-cover rounded-xl shrink-0 shadow-md high-quality-image" onerror="this.src='https://via.placeholder.com/64x80?text=No+Image'">
+                    <div class="flex flex-col gap-1 overflow-hidden">
+                        <h3 class="font-bold text-base text-white truncate readable-text">${anime.title}</h3>
+                        <p class="text-xs text-secondary">${broadcastTime}</p>
+                        <div class="flex gap-2 mt-1">
+                            <!-- Replaced font-bagel with font-concertOne -->
+                            ${genres.map(g => `<span class="tag font-concertOne">${g.name}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="ml-auto">
+                        <span class="material-icons-round text-gray-600">chevron_right</span>
+                    </div>
+                </div>
+                `;
+            }).join('');
+            
+            setTimeout(initScrollAnimations, 100);
+        }
+
+        function changeScheduleDay(day) {
+            state.currentScheduleDay = day;
+            fetchSchedule();
+        }
+
+        // --- GENRE FILTERING ---
+
+        async function fetchByGenre(id, button) {
+            // Update genre slider animation
+            updateGenreSlider(button);
+            
+            // Render Skeletons
+            DOM.trending.innerHTML = Array(6).fill(createSkeletonCard()).join('');
+            
+            const data = await fetchJikan(`/anime?genres=${id}&limit=15&order_by=score&sort=desc`);
+            if(data && data.data) {
+                // Scroll to trending to show results
+                DOM.trending.scrollIntoView({ behavior: 'smooth' });
+                state.topAnime = data.data;
+                renderTrending(data.data);
+            }
+        }
+
+        async function fetchAllAnime() {
+            const button = DOM.genreList.querySelector('.genre-btn');
+            // Update genre slider animation
+            updateGenreSlider(button);
+            
+            // Render Skeletons
+            DOM.trending.innerHTML = Array(6).fill(createSkeletonCard()).join('');
+            
+            const data = await fetchJikan('/top/anime?filter=airing&limit=15');
+            if(data && data.data) {
+                DOM.trending.scrollIntoView({ behavior: 'smooth' });
+                state.topAnime = data.data;
+                renderTrending(data.data);
+            }
+        }
+
+        // --- SEARCH LOGIC ---
+
+        function toggleSearch() {
+            const overlay = DOM.searchOverlay;
+            if (overlay.classList.contains('hidden')) {
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+                DOM.searchInput.focus();
+                DOM.searchInput.value = '';
+                DOM.searchResults.innerHTML = '';
+                // Show popular genres when opening search
+                DOM.popularGenres.style.display = 'block';
+            } else {
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
+        function searchByTag(tag) {
+            DOM.searchInput.value = tag;
+            DOM.searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+
+        let debounceTimer;
+        DOM.searchInput.addEventListener('input', (e) => {
+            clearTimeout(debounceTimer);
+            const query = e.target.value;
+            
+            // Hide popular genres when user starts typing
+            if (query.length > 0) {
+                DOM.popularGenres.style.display = 'none';
+            } else {
+                DOM.popularGenres.style.display = 'block';
+            }
+            
+            if (query.length < 3) {
+                DOM.searchResults.innerHTML = `
+                    <div class="text-center py-8 text-gray-400">
+                        <span class="material-icons-round text-4xl mb-2 opacity-50">search</span>
+                        <p>Type at least 3 characters to search</p>
+                        <p class="text-sm mt-2">Or try one of the popular genres above</p>
+                    </div>
+                `;
+                return;
+            }
+
+            debounceTimer = setTimeout(async () => {
+                // Render Skeletons
+                DOM.searchResults.innerHTML = Array(3).fill(createSkeletonSearchResult()).join('');
+                
+                const data = await fetchJikan(`/anime?q=${encodeURIComponent(query)}&limit=10`);
+                
+                if (data && data.data) {
+                    if (data.data.length === 0) {
+                        DOM.searchResults.innerHTML = `
+                            <div class="text-center py-8 text-gray-400">
+                                <span class="material-icons-round text-4xl mb-2 opacity-50">search_off</span>
+                                <p>No results found for "${query}"</p>
+                                <p class="text-sm mt-2">Try a different search term</p>
+                            </div>
+                        `;
+                    } else {
+                        DOM.searchResults.innerHTML = data.data.map(anime => {
+                            // Use high quality image
+                            const imgUrl = anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url || 'https://via.placeholder.com/100x140?text=No+Image';
+                            const genres = anime.genres?.slice(0,3) || [];
+                            
+                            return `
+                            <div onclick="openDetails(${anime.mal_id}); toggleSearch()" class="search-result scroll-animate">
+                                <div class="flex gap-4">
+                                    <img src="${imgUrl}" class="w-20 h-28 object-cover rounded-xl shrink-0 high-quality-image" onerror="this.src='https://via.placeholder.com/100x140?text=No+Image'">
+                                    <div class="flex flex-col gap-2 overflow-hidden flex-1">
+                                        <h3 class="font-bold text-white text-lg readable-text">${anime.title}</h3>
+                                        <div class="flex gap-2 text-sm text-gray-400">
+                                            <span class="font-mono">${anime.type || 'Unknown'}</span>
+                                            <span>•</span>
+                                            <span class="font-mono">${anime.episodes || '?'} episodes</span>
+                                            <span>•</span>
+                                            <span class="flex items-center gap-1">
+                                                <span class="material-icons-round text-yellow-400 text-sm">star</span>
+                                                <span class="font-mono">${anime.score || 'N/A'}</span>
+                                            </span>
+                                        </div>
+                                        <div class="flex flex-wrap gap-2 mt-1">
+                                            <!-- Replaced font-bagel with font-concertOne -->
+                                            ${genres.map(g => `<span class="tag font-concertOne">${g.name}</span>`).join('')}
+                                        </div>
+                                        <p class="text-gray-300 line-clamp-2 mt-2 readable-text">${anime.synopsis || 'No synopsis available.'}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+                        }).join('');
+                        
+                        // Initialize animations for search results
+                        setTimeout(initScrollAnimations, 100);
+                    }
+                } else {
+                    DOM.searchResults.innerHTML = `
+                        <div class="text-center py-8 text-gray-400">
+                            <span class="material-icons-round text-4xl mb-2 opacity-50">error</span>
+                            <p>Failed to load results</p>
+                            <p class="text-sm mt-2">Please try again later</p>
+                        </div>
+                    `;
+                }
+            }, 500);
+        });
+
+        // --- DETAILS LOGIC ---
+
+        async function openDetails(id) {
+            // Show modal immediately with skeleton loader
+            DOM.detailsModal.classList.remove('translate-y-full');
+            DOM.detailsContent.innerHTML = renderDetailsSkeleton();
+            
+            // Reset reviews state
+            state.reviewsPage = 1;
+            state.isLoadingReviews = false;
+            state.allReviews = [];
+            state.currentAnimeId = id;
+            
+            try {
+                // Fetch Full Details, Streaming, Characters, Recommendations, Reviews, Related Seasons, and Videos
+                const [detailsData, streamingData, charData, recData, reviewsData, relatedData, videosData] = await Promise.all([
+                    fetchJikan(`/anime/${id}`),
+                    fetchJikan(`/anime/${id}/streaming`),
+                    fetchJikan(`/anime/${id}/characters`),
+                    fetchJikan(`/anime/${id}/recommendations`),
+                    fetchJikan(`/anime/${id}/reviews`),
+                    fetchRelatedSeasons(id),
+                    fetchVideos(id)
+                ]);
+
+                // Check if we have the basic details
+                if (!detailsData || !detailsData.data) {
+                    throw new Error('Failed to load anime details');
+                }
+
+                const anime = detailsData.data;
+                const streaming = streamingData?.data || [];
+                const characters = charData?.data || [];
+                const recommendations = recData?.data || [];
+                const reviews = reviewsData?.data || [];
+                const videos = videosData || { promo: [], episodes: [], music_videos: [] };
+
+                // Store initial reviews
+                state.allReviews = reviews || [];
+                
+                // Use trailer data directly from the main anime response
+                const trailer = anime.trailer || null;
+                
+                // Use high quality image
+                const imgUrl = anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url || 'https://via.placeholder.com/800x450?text=No+Image';
+
+                // Build streaming buttons with service logos
+                const streamingButtons = streaming.map(stream => {
+                    const serviceName = stream.name;
+                    const serviceConfig = streamingServices[serviceName] || { 
+                        color: 'default', 
+                        icon: '<span class="material-icons-round text-base">play_circle</span>' 
+                    };
+                    return `
+                        <a href="${stream.url}" target="_blank" class="streaming-btn streaming-${serviceConfig.color}">
+                            ${serviceConfig.icon}
+                            ${serviceName}
+                        </a>
+                    `;
+                }).join('');
+
+                // Build voice actors section
+                const voiceActors = characters
+                    .filter(char => char.voice_actors && char.voice_actors.length > 0)
+                    .slice(0, 8)
+                    .map(char => {
+                        const voiceActor = char.voice_actors[0];
+                        // Use high quality images for voice actors
+                        const vaImg = voiceActor.person?.images?.jpg?.large_image_url || voiceActor.person?.images?.jpg?.image_url || 'https://via.placeholder.com/64x64?text=No+Image';
+                        const charImg = char.character?.images?.jpg?.large_image_url || char.character?.images?.jpg?.image_url || 'https://via.placeholder.com/64x64?text=No+Image';
+                        
+                        return `
+                        <div class="flex flex-col items-center gap-2 min-w-[120px] scroll-animate-left">
+                            <div class="relative">
+                                <img src="${vaImg}" class="w-16 h-16 rounded-full object-cover border-2 border-surfaceLight shadow-md high-quality-image" onerror="this.src='https://via.placeholder.com/64x64?text=No+Image'">
+                                <img src="${charImg}" class="w-10 h-10 rounded-full object-cover border-2 border-surfaceLight absolute -bottom-1 -right-1 shadow-md high-quality-image" onerror="this.src='https://via.placeholder.com/64x64?text=No+Image'">
+                            </div>
+                            <div class="text-center">
+                                <p class="text-xs font-medium text-white truncate w-full">${voiceActor.person?.name || 'Unknown'}</p>
+                                <p class="text-xs text-gray-400 truncate w-full">${char.character?.name || 'Unknown'}</p>
+                            </div>
+                        </div>
+                        `;
+                    }).join('');
+
+                // Build recommendations section
+                const recommendationsSection = recommendations && recommendations.length > 0 ? `
+                <div class="mb-8">
+                    <h3 class="text-lg font-syne font-bold text-white mb-4">You Might Also Like</h3>
+                    <div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+                        ${recommendations.slice(0, 5).map(rec => {
+                            // Use high quality image
+                            const recImg = rec.entry?.images?.jpg?.large_image_url || rec.entry?.images?.jpg?.image_url || 'https://via.placeholder.com/100x140?text=No+Image';
+                            return `
+                            <div onclick="openDetails(${rec.entry?.mal_id})" class="snap-center shrink-0 w-[120px] flex flex-col gap-2 group active:scale-95 transition-transform duration-200 card-hover scroll-animate-right">
+                                <div class="relative h-[160px] rounded-2xl overflow-hidden shadow-lg">
+                                    <img src="${recImg}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 high-quality-image" loading="lazy" onerror="this.src='https://via.placeholder.com/100x140?text=No+Image'">
+                                </div>
+                                <h3 class="font-medium text-xs truncate text-gray-100 readable-text">${rec.entry?.title || 'Unknown'}</h3>
+                            </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+                ` : '';
+
+                // Build seasons/related section with images and truncated titles
+                let seasonsSection = '';
+                if (relatedData && relatedData["Related Anime"] && Object.keys(relatedData["Related Anime"]).length > 0) {
+                    seasonsSection = `
+                    <div class="mb-8">
+                        <h3 class="text-xl font-syne font-bold text-white mb-6">Seasons & Related</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            ${Object.entries(relatedData["Related Anime"]).map(([relationType, entries]) => {
+                                return `
+                                <div class="glass-panel p-4 rounded-xl">
+                                    <h4 class="font-bold text-white mb-3 font-syne">${relationType}</h4>
+                                    <div class="space-y-3">
+                                        ${entries.slice(0, 3).map(entry => {
+                                            // Truncate long titles
+                                            const truncatedTitle = entry.name.length > 30 
+                                                ? entry.name.substring(0, 30) + '...' 
+                                                : entry.name;
+                                                
+                                            return `
+                                            <div onclick="openDetails(${entry.mal_id})" class="flex items-center gap-3 p-3 rounded-lg hover:bg-surfaceLight transition cursor-pointer">
+                                                <img src="${entry.image_url}" class="w-12 h-16 object-cover rounded-lg shadow-md high-quality-image" onerror="this.src='https://via.placeholder.com/100x140?text=No+Image'">
+                                                <div class="flex-1 overflow-hidden">
+                                                    <p class="text-sm font-medium text-white truncate readable-text" title="${entry.name}">${truncatedTitle}</p>
+                                                    <p class="text-xs text-gray-400 font-mono">${entry.type}</p>
+                                                </div>
+                                                <span class="material-icons-round text-gray-400 text-sm">chevron_right</span>
+                                            </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                    `;
+                }
+
+                // Calculate progress for circular indicators
+                const popularityPercent = anime.popularity ? Math.max(10, 100 - (anime.popularity / 20)) : 50;
+                const scorePercent = anime.score ? anime.score * 10 : 0;
+
+                // Build Video Sections - Only promo and music videos, no episode previews
+                const promoVideosSection = createVideoCarousel(videos.promo, 'promo', 'Promotional Videos');
+                const musicVideosSection = createVideoCarousel(videos.music_videos, 'music_videos', 'Music Videos');
+
+                // --- NEW REARRANGED LAYOUT ---
+                DOM.detailsContent.innerHTML = `
+                    <!-- Hero Media - Increased height -->
+                    <div id="detail-banner-container" class="relative h-[70vh] w-full bg-black overflow-hidden group">
+                        <div id="detail-media-wrapper" class="absolute inset-0 w-full h-full transition-opacity duration-700">
+                            <img src="${imgUrl}" class="w-full h-full object-cover object-center opacity-80 high-quality-image" onerror="this.src='https://via.placeholder.com/800x450?text=No+Image'">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+                        
+                        <div class="absolute bottom-0 left-0 w-full p-8">
+                             <h1 class="text-4xl md:text-6xl font-syne font-black text-white mb-4 leading-tight text-shadow">
+                                ${anime.title_english || anime.title}
+                            </h1>
+                            <div class="flex items-center gap-3 text-base font-medium text-gray-300 mb-6 flex-wrap">
+                                <span class="glass-panel px-4 py-2 rounded-xl text-white font-bold font-mono">${anime.rating?.split(' ')[0] || 'Unknown'}</span>
+                                <span class="font-mono">${anime.year || 'N/A'}</span>
+                                <span class="font-mono">${anime.duration || 'Unknown'}</span>
+                                <span class="flex items-center gap-1"><span class="material-icons-round text-yellow-400 text-base">star</span> <span class="font-mono">${anime.score || 'N/A'}</span></span>
+                            </div>
+                             <div class="flex gap-3 w-full md:w-auto">
+                                <button onclick="${videos.promo && videos.promo.length > 0 ? `scrollToPromoSection()` : (trailer && trailer.youtube_id ? `playTrailer('${trailer.youtube_id}')` : 'console.warn(\'No trailer available\')')}" class="flex-1 md:flex-none h-14 px-8 bg-accent text-white rounded-xl font-bold text-base flex items-center justify-center gap-2 active:scale-95 transition ${!videos.promo || videos.promo.length === 0 ? (!trailer || !trailer.youtube_id ? 'opacity-50 cursor-not-allowed' : '') : ''}">
+                                    <span class="material-icons-round">play_circle</span>
+                                    ${videos.promo && videos.promo.length > 0 ? 'Trailer' : (trailer && trailer.youtube_id ? 'Watch Trailer' : 'No Trailer')}
+                                </button>
+                                <a href="${anime.url || '#'}" target="_blank" class="h-14 w-14 flex items-center justify-center glass-light rounded-xl text-white active:scale-95 transition">
+                                    <span class="material-icons-round">open_in_new</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Body -->
+                    <div class="px-6 py-8 animate-slide-up">
+                        
+                        <!-- Synopsis -->
+                        <div class="mb-10 max-w-4xl">
+                            <h3 class="text-xl font-syne font-bold text-white mb-4">Synopsis</h3>
+                            <p id="synopsis-text" class="text-gray-300 leading-relaxed text-base md:text-lg font-light synopsis-truncated readable-text">
+                                ${anime.synopsis || 'No synopsis available.'}
+                            </p>
+                            ${anime.synopsis && anime.synopsis.length > 300 ? `
+                            <button id="read-more-btn" onclick="toggleSynopsis()" class="mt-4 text-accent font-bold text-base flex items-center gap-1 active:scale-95 transition-transform">
+                                Read More
+                                <span class="material-icons-round text-base read-more-icon">expand_more</span>
+                            </button>
+                            ` : ''}
+                        </div>
+                        
+                        <!-- New 2-Column Layout -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
+                            
+                            <!-- Main Column (Left) -->
+                            <div class="lg:col-span-2 flex flex-col gap-10">
+                                <!-- Streaming Links -->
+                                ${streaming && streaming.length > 0 ? `
+                                <div>
+                                    <h3 class="text-xl font-syne font-bold text-white mb-4">Where to Watch</h3>
+                                    <div class="flex flex-wrap gap-3">
+                                        ${streamingButtons}
+                                    </div>
+                                </div>
+                                ` : ''}
+                                
+                                <!-- Promotional Videos Section -->
+                                ${promoVideosSection}
+        
+                                <!-- Music Videos Section -->
+                                ${musicVideosSection}
+                                
+                                <!-- Seasons & Related Section -->
+                                ${seasonsSection}
+                                
+                                <!-- Reviews Carousel -->
+                                <div class="mb-10">
+                                    <h3 class="text-lg font-syne font-bold text-white mb-4">User Reviews</h3>
+                                    <div class="relative">
+                                        <div id="reviews-carousel" class="flex gap-4 overflow-x-auto snap-x-mandatory no-scrollbar pb-4">
+                                            <!-- Reviews will be loaded dynamically -->
+                                        </div>
+                                        <div class="flex justify-center mt-4">
+                                            <div class="carousel-nav-pill">
+                                                <button class="carousel-nav-arrow" onclick="scrollReviewsCarousel(-1)">
+                                                    <span class="material-icons-round text-sm">chevron_left</span>
+                                                </button>
+                                                <div id="reviews-dots" class="flex gap-1 mx-2">
+                                                    <!-- Dots will be updated dynamically -->
+                                                </div>
+                                                <button class="carousel-nav-arrow" onclick="scrollReviewsCarousel(1)">
+                                                    <span class="material-icons-round text-sm">chevron_right</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Sidebar (Right) -->
+                            <div class="lg:col-span-1 flex flex-col gap-10 lg:pt-0">
+                                <!-- Improved Anime Info Section with Circular Progress -->
+                                <div>
+                                    <h3 class="text-xl font-syne font-bold text-white mb-6">Details</h3>
+                                    <div class="anime-info-grid">
+                                        <div class="anime-info-item">
+                                            <div class="circular-progress mb-2" data-progress="${anime.score || 'N/A'}" style="background: radial-gradient(closest-side, #151515 79%, transparent 80% 100%), conic-gradient(#8B5CF6 0% ${scorePercent}%, #2D2D2D 0% 100%);"></div>
+                                            <div class="anime-info-label font-mono">Score</div>
+                                            <div class="anime-info-value font-mono">${anime.score || 'N/A'}</div>
+                                        </div>
+                                        <div class="anime-info-item">
+                                            <div class="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-2">
+                                                <span class="material-icons-round text-accent text-xl">theaters</span>
+                                            </div>
+                                            <div class="anime-info-label font-mono">Studio</div>
+                                            <div class="anime-info-value">${anime.studios?.[0]?.name || 'Unknown'}</div>
+                                        </div>
+                                        <div class="anime-info-item">
+                                            <div class="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-2">
+                                                <span class="material-icons-round text-accent text-xl">schedule</span>
+                                            </div>
+                                            <div class="anime-info-label font-mono">Status</div>
+                                            <div class="anime-info-value">${anime.status || 'Unknown'}</div>
+                                        </div>
+                                        <div class="anime-info-item">
+                                            <div class="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-2">
+                                                <span class="material-icons-round text-accent text-xl">list</span>
+                                            </div>
+                                            <div class="anime-info-label font-mono">Episodes</div>
+                                            <div class="anime-info-value font-mono">${anime.episodes || '?'}</div>
+                                        </div>
+                                        <div class="anime-info-item">
+                                            <div class="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-2">
+                                                <span class="material-icons-round text-accent text-xl">source</span>
+                                            </div>
+                                            <div class="anime-info-label font-mono">Source</div>
+                                            <div class="anime-info-value">${anime.source || 'Unknown'}</div>
+                                        </div>
+                                        <div class="anime-info-item">
+                                            <div class="circular-progress mb-2" data-progress="#${anime.popularity || 'N/A'}" style="background: radial-gradient(closest-side, #151515 79%, transparent 80% 100%), conic-gradient(#8B5CF6 0% ${popularityPercent}%, #2D2D2D 0% 100%);"></div>
+                                            <div class="anime-info-label font-mono">Popularity</div>
+                                            <div class="anime-info-value font-mono">#${anime.popularity || 'N/A'}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Additional Info -->
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="glass-panel p-4 rounded-xl">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span class="material-icons-round text-accent text-base">event</span>
+                                            <p class="text-xs text-secondary uppercase font-bold font-mono">Aired</p>
+                                        </div>
+                                        <p class="text-white font-medium text-sm font-mono">${anime.aired?.string || 'Unknown'}</p>
+                                    </div>
+                                    <div class="glass-panel p-4 rounded-xl">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span class="material-icons-round text-accent text-base">access_time</span>
+                                            <p class="text-xs text-secondary uppercase font-bold font-mono">Duration</p>
+                                        </div>
+                                        <p class="text-white font-medium font-mono">${anime.duration || 'Unknown'}</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Voice Actors -->
+                                ${voiceActors ? `
+                                <div>
+                                    <h3 class="text-xl font-syne font-bold text-white mb-6">Voice Cast</h3>
+                                    <div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+                                        ${voiceActors}
+                                    </div>
+                                </div>
+                                ` : ''}
+        
+                                <!-- Tags -->
+                                ${anime.genres && anime.genres.length > 0 ? `
+                                <div>
+                                    <h3 class="text-xl font-syne font-bold text-white mb-6">Genres & Themes</h3>
+                                    <div class="flex flex-wrap gap-3">
+                                        <!-- Replaced font-bagel with font-concertOne -->
+                                        ${anime.genres.map(g => `<span class="tag font-concertOne">${g.name}</span>`).join('')}
+                                        ${anime.themes ? anime.themes.map(t => `<span class="tag font-concertOne">${t.name}</span>`).join('') : ''}
+                                        ${anime.demographics ? anime.demographics.map(d => `<span class="tag font-concertOne">${d.name}</span>`).join('') : ''}
+                                    </div>
+                                </div>
+                                ` : ''}
+
+                                <!-- Recommendations -->
+                                ${recommendationsSection}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                // --- END OF NEW LAYOUT ---
+
+                // Initialize video carousel scroll listeners immediately
+                setTimeout(() => {
+                    initVideoCarouselScrollListeners();
+                }, 100);
+
+                // Initialize reviews carousel with load more functionality
+                if (state.allReviews.length > 0) {
+                    renderReviewsCarousel();
+                    initializeReviewsCarousel();
+                } else {
+                    // Handle case with no reviews
+                    document.getElementById('reviews-carousel').innerHTML = '<p class="text-gray-400 text-sm text-center w-full">No reviews available for this anime.</p>';
+                    document.getElementById('reviews-dots').innerHTML = '';
+                }
+
+                // Re-initialize scroll animations for details page
+                setTimeout(initScrollAnimations, 100);
+
+            } catch (error) {
+                console.error("Error loading details:", error);
+                DOM.detailsContent.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-screen p-6 text-center">
+                        <span class="material-icons-round text-6xl text-red-400 mb-4">error_outline</span>
+                        <h2 class="text-2xl font-bold text-white mb-2">Failed to Load Details</h2>
+                        <p class="text-gray-400 mb-6">There was an error loading the anime details. Please try again.</p>
+                        <button onclick="closeDetails()" class="px-8 py-4 bg-accent text-white rounded-xl font-bold text-base active:scale-95 transition">
+                            Go Back
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // Scroll to promo section function
+        function scrollToPromoSection() {
+            const promoSection = document.getElementById('promo-carousel-section');
+            if (promoSection) {
+                promoSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Reviews carousel functions with load more
+        function renderReviewsCarousel() {
+            const carousel = document.getElementById('reviews-carousel');
+            const dotsContainer = document.getElementById('reviews-dots');
+            
+            if (!carousel || !dotsContainer) return;
+            
+            carousel.innerHTML = state.allReviews.map((review, index) => {
+                const score = review.score || 0;
+                const stars = Array(5).fill(0).map((_, i) => 
+                    i < score ? 'star' : 'star_border'
+                ).map(icon => `<span class="material-icons-round review-star text-sm">${icon}</span>`).join('');
+                
+                return `
+                <div class="snap-center shrink-0 w-full max-w-md">
+                    <div class="glass-panel p-4 rounded-xl h-full">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <p class="font-bold text-white">${review.user?.username || 'Anonymous'}</p>
+                                <div class="flex items-center gap-1 mt-1">
+                                    ${stars}
+                                </div>
+                            </div>
+                            <span class="text-xs text-gray-400 font-mono">${review.date?.split('T')[0] || ''}</span>
+                        </div>
+                        <p class="text-sm text-gray-300 line-clamp-6 readable-text">${review.review || 'No review content.'}</p>
+                        ${review.review && review.review.length > 300 ? `
+                        <button onclick="toggleReviewText(this)" class="mt-2 text-accent font-bold text-xs flex items-center gap-1 active:scale-95 transition-transform">
+                            Read More
+                            <span class="material-icons-round text-xs read-more-icon">expand_more</span>
+                        </button>
+                        ` : ''}
+                    </div>
+                </div>
+                `;
+            }).join('');
+            
+            // Update dots
+            updateReviewsCarouselDots();
+        }
+
+        // Updated updateReviewsCarouselDots function
+        function updateReviewsCarouselDots() {
+            const carousel = document.getElementById('reviews-carousel');
+            const dotsContainer = document.getElementById('reviews-dots');
+            
+            // Use the state's item count, which is the source of truth
+            const itemCount = state.allReviews.length; 
+            
+            if (!carousel || !dotsContainer || itemCount === 0) return;
+            
+            // Check if carousel has children, otherwise itemWidth will be 0
+            if (carousel.children.length === 0) {
+                // This can happen if renderReviewsCarousel hasn't finished
+                // Or if there are no reviews
+                // We can either return or set a default
+                return; 
+            }
+            
+            const scrollLeft = carousel.scrollLeft;
+            
+            // Use the same itemWidth calculation
+            const itemWidth = carousel.querySelector('.snap-center').offsetWidth + 16;
+            
+            // Calculate current position more accurately
+            const position = Math.round(scrollLeft / itemWidth);
+            
+            // Clamp the position to be within valid bounds
+            const clampedPosition = Math.max(0, Math.min(itemCount - 1, position));
+            
+            // Only update if the index has actually changed
+            if (clampedPosition !== state.currentReviewIndex) {
+                 state.currentReviewIndex = clampedPosition;
+            }
+
+            // Update dots
+            updateDotsContainer(dotsContainer, itemCount, state.currentReviewIndex);
+        }
+
+        async function loadMoreReviews() {
+            if (state.isLoadingReviews || !state.currentAnimeId) return;
+            
+            state.isLoadingReviews = true;
+            
+            try {
+                state.reviewsPage++;
+                const reviewsData = await fetchJikan(`/anime/${state.currentAnimeId}/reviews?page=${state.reviewsPage}`);
+                
+                if (reviewsData && reviewsData.data && reviewsData.data.length > 0) {
+                    const newReviews = reviewsData.data;
+                    state.allReviews = [...state.allReviews, ...newReviews];
+                    
+                    // Re-render the entire carousel with the new reviews
+                    renderReviewsCarousel();
+                    
+                    // Re-initialize the carousel
+                    initializeReviewsCarousel();
+                } else {
+                    // No more reviews found, stop trying to load
+                    state.reviewsPage--; // Decrement page
+                }
+            } catch (error) {
+                console.error('Error loading more reviews:', error);
+                state.reviewsPage--; // Decrement page on error
+            } finally {
+                state.isLoadingReviews = false;
+            }
+        }
+
+        function scrollReviewsCarousel(direction) {
+            const carousel = document.getElementById('reviews-carousel');
+            if (!carousel) return;
+
+            // Get the first card's width + gap
+            const firstCard = carousel.querySelector('.snap-center');
+            if (!firstCard) return;
+
+            const itemWidth = firstCard.offsetWidth + 16; // 16 is from gap-4
+            
+            const scrollAmount = itemWidth;
+            
+            // Calculate new index
+            let newIndex = state.currentReviewIndex + direction;
+            newIndex = Math.max(0, Math.min(state.allReviews.length - 1, newIndex));
+
+            carousel.scrollTo({
+                left: newIndex * scrollAmount,
+                behavior: 'smooth'
+            });
+            
+            // Update dots *after* the scroll animation is likely to have started
+            setTimeout(() => updateReviewsCarouselDots(), 100);
+        }
+
+        // *** START: MODIFIED CODE ***
+        // Updated initializeReviewsCarousel function with immediate visual update
+        function initializeReviewsCarousel() {
+            const carousel = document.getElementById('reviews-carousel');
+            if (!carousel) return;
+            
+            let scrollTimer; // Timer for debouncing
+
+            // Add scroll event listener to update dots and check for end
+            carousel.addEventListener('scroll', () => {
+                
+                // 1. Run the visual update immediately on the next animation frame
+                // This makes the dots feel responsive
+                requestAnimationFrame(() => {
+                    updateReviewsCarouselDots();
+                });
+
+                // 2. Clear the existing timer for heavy work
+                clearTimeout(scrollTimer);
+
+                // 3. Set a new timer to debounce heavy operations
+                scrollTimer = setTimeout(() => {
+                    // Check if scrolled to the end and not already loading
+                    // Increased threshold to 200px to trigger load-more sooner
+                    if (!state.isLoadingReviews && 
+                        carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 200) { 
+                        loadMoreReviews();
+                    }
+                }, 150); // 150ms debounce time
+            });
+            
+            // Note: The dot click listeners are now added in updateDotsContainer.
+        }
+        // *** END: MODIFIED CODE ***
+
+        function toggleReviewText(button) {
+            const reviewText = button.previousElementSibling;
+            const icon = button.querySelector('.read-more-icon');
+            
+            if (reviewText.classList.contains('line-clamp-6')) {
+                reviewText.classList.remove('line-clamp-6');
+                button.innerHTML = 'Read Less <span class="material-icons-round text-xs read-more-icon" style="transform: rotate(180deg);">expand_less</span>';
+            } else {
+                reviewText.classList.add('line-clamp-6');
+                button.innerHTML = 'Read More <span class="material-icons-round text-xs read-more-icon">expand_more</span>';
+            }
+        }
+
+        function toggleSynopsis() {
+            const synopsisText = document.getElementById('synopsis-text');
+            const readMoreBtn = document.getElementById('read-more-btn');
+            const icon = readMoreBtn.querySelector('.read-more-icon');
+            
+            if (synopsisText.classList.contains('synopsis-truncated')) {
+                synopsisText.classList.remove('synopsis-truncated');
+                synopsisText.classList.add('synopsis-expanded');
+                readMoreBtn.innerHTML = 'Read Less <span class="material-icons-round text-base read-more-icon">expand_less</span>';
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                synopsisText.classList.remove('synopsis-expanded');
+                synopsisText.classList.add('synopsis-truncated');
+                readMoreBtn.innerHTML = 'Read More <span class="material-icons-round text-base read-more-icon">expand_more</span>';
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function closeDetails() {
+            DOM.detailsModal.classList.add('translate-y-full');
+            // Clear content to stop iframe playing
+            setTimeout(() => {
+                DOM.detailsContent.innerHTML = '';
+            }, 500);
+        }
+
+        function playTrailer(id) {
+            if(!id) {
+                // Do not use alert(). We can show a temporary message or just log.
+                console.warn("No trailer ID provided.");
+                return;
+            };
+            window.open(`https://www.youtube.com/watch?v=${id}`, '_blank');
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Init
+        window.addEventListener('DOMContentLoaded', init);
+
+    </script>
+</body>
+</html>
+
+
