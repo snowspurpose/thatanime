@@ -1,2 +1,2 @@
 # thanime
-My try at — A Jikan wrapper.
+My shot at — A Jikan wrapper.
